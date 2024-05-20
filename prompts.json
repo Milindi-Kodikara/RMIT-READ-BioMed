@@ -1,0 +1,15 @@
+[{
+  "prompt_id": "p_001",
+  "instruction": "Find the gene, disease entities in the provided text.",
+  "guideline": "",
+  "example": "",
+  "output_format": "Display the results in JSON format with the attributes being “gene” and “disease”",
+  "text": ""
+}, {
+  "prompt_id": "p_002",
+  "instruction": "Find the gene, disease entities in the provided text.",
+  "guideline": "",
+  "example": "",
+  "output_format": "Display the results in tsv format with the attributes being “gene” and “disease”",
+  "text": ""
+}]
