@@ -1,15 +1,10 @@
 [{
-  "prompt_id": "p_001",
-  "instruction": "Find the gene, disease entities in the provided text.",
-  "guideline": "",
-  "example": "",
-  "output_format": "Display the results in JSON format with the attributes being “gene” and “disease”",
-  "text": ""
+  "prompt_id": "ner_001_en",
+  "instruction": "Target: Find the gene and disease entities in the provided spanish language text. Display the results in JSON format with the following attributes 'gene' and 'disease'.",
+  "text": "Text: {}"
 }, {
-  "prompt_id": "p_002",
-  "instruction": "Find the gene, disease entities in the provided text.",
-  "guideline": "",
-  "example": "",
-  "output_format": "Display the results in tsv format with the attributes being “gene” and “disease”",
-  "text": ""
-}]
+  "prompt_id": "ner_002_es",
+  "instruction": "Objetivo: encontrar las entidades genéticas y patológicas en el texto en español proporcionado. Muestre los resultados en formato tsv debajo de las columnas 'gene' para gen y 'disease' para enfermedad.",
+  "text": "Text: {}"
+}
+]
