@@ -1,10 +1,10 @@
 [{
   "prompt_id": "p_001_ner_en_json",
-  "instruction": "Target: Find the gene and disease entities in the provided spanish language text. Display the results in JSON tuples with 'label' attribute for identified entity type as either gene or disease and 'span' for identified entities.",
+  "instruction": "Target: Find gene and disease entities in the provided spanish language text. Display results in the tsv format with the headers 'label' to annotate the entity as either a gene or disease and 'span' for the identified entity. Provide each label and span in a new line.",
   "text": "Text: {}"
 }, {
   "prompt_id": "p_002_ner_es_json",
-  "instruction": "Objetivo: encontrar las entidades genéticas y patológicas en el texto en español proporcionado. Muestre los resultados en tuplas JSON con el atributo 'label' para el tipo de entidad identificada como gen o enfermedad y 'span' para entidades identificadas.",
+  "instruction": "Objetivo: encontrar el gen y las entidades de enfermedad en el texto en español proporcionado. Mostrar los resultados en formato tsv con los encabezados 'label' para anotar la entidad como gen o enfermedad y 'span' para la entidad identificada. Proporcione cada 'label' y 'span' en una nueva línea.",
   "text": "Text: {}"
 }
 ]
