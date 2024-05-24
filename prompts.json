@@ -1,10 +1,10 @@
 [{
-  "prompt_id": "p_001_ner_en_json",
-  "instruction": "Target: Find gene and disease entities in the provided spanish language text. Display results in the tsv format with the headers 'label' to annotate the entity as either a gene or disease and 'span' for the identified entity. Provide each label and span in a new line.",
+  "prompt_id": "p_001_ner_en_tsv",
+  "instruction": "Target: Find individual gene entities as 'gene' and individual disease entities as 'disease' in the provided spanish language text. Display results in the tsv format with the headers 'label' to annotate the entity as either a 'gene' or 'disease' and 'span' for the identified entity. Provide each label and span in a new line.",
   "text": "Text: {}"
 }, {
-  "prompt_id": "p_002_ner_es_json",
-  "instruction": "Objetivo: encontrar el gen y las entidades de enfermedad en el texto en español proporcionado. Mostrar los resultados en formato tsv con los encabezados 'label' para anotar la entidad como gen o enfermedad y 'span' para la entidad identificada. Proporcione cada 'label' y 'span' en una nueva línea.",
+  "prompt_id": "p_002_ner_es_tsv",
+  "instruction": "Objetivo: encontrar el gen como 'gene' y las entidades de enfermedad como 'disease' en el texto en español proporcionado. Mostrar los resultados en formato tsv con los encabezados 'label' para anotar la entidad como 'gene' o 'disease' y 'span' para la entidad identificada. Proporcione cada 'label' y 'span' en una nueva línea.",
   "text": "Text: {}"
 }
 ]
