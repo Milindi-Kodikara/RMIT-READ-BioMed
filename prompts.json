@@ -1,10 +1,10 @@
 [{
   "prompt_id": "p_001_ner_en_tsv",
-  "instruction": "Target: Find individual gene entities as 'gene' and individual disease entities as 'disease' in the provided spanish language text. Display results in the tsv format with the headers 'label' to annotate the entity as either a 'gene' or 'disease' and 'span' for the identified entity. Provide each label and span in a new line.",
+  "instruction": "Target: Find variant on DNA sequence entities as 'DNAMutation', RS number entities as 'SNP', COSMIC mutation entities as 'SNP', Allele on DNA sequence entities as 'DNAAllele', wild type and mutations as 'NucleotideChange', variant entities with insufficient information as 'OtherMutation', gene entities as 'Gene', disease entities as 'Disease' and Transcript ID entities as 'Transcript' in the provided spanish language text. Display results in the tsv format with the headers 'label' to annotate the entity as one of 'DNAMutation', 'SNP', 'SNP', 'DNAAllele', 'NucleotideChange', 'OtherMutation', 'Gene', 'Disease', 'Transcript' and 'span' for the identified entity. Provide each label and span in a new line.",
   "text": "Text: {}"
 }, {
   "prompt_id": "p_002_ner_es_tsv",
-  "instruction": "Objetivo: encontrar el gen como 'gene' y las entidades de enfermedad como 'disease' en el texto en español proporcionado. Mostrar los resultados en formato tsv con los encabezados 'label' para anotar la entidad como 'gene' o 'disease' y 'span' para la entidad identificada. Proporcione cada 'label' y 'span' en una nueva línea.",
+  "instruction": "Objetivo: encontrar variantes en entidades de secuencia de ADN como 'DNAMutation', entidades de número RS como 'SNP', entidades de mutación COSMIC como 'SNP', alelos en entidades de secuencia de ADN como 'DNAAllele', tipo salvaje y mutaciones como ' NucleotideChange', entidades variantes con información insuficiente como 'OtherMutation', entidades genéticas como 'Gene', entidades de enfermedad como 'Disease' y entidades de ID de transcripción como 'Transcript' en el texto en español proporcionado. Muestra los resultados en formato tsv con los encabezados. 'label' para anotar la entidad como una de 'DNAMutation', 'SNP', 'DNAAllele', 'NucleotideChange', 'OtherMutation', 'Gene', 'Disease', 'Transcript' y 'span' para la entidad identificada. Proporcione cada etiqueta y intervalo en una nueva línea.",
   "text": "Text: {}"
 }
 ]
