@@ -1,0 +1,4 @@
+prompt_id	data_type	true_positive	false_positive	false_negative	precision	recall	f1	hallucination_count	date
+p_001_ner_en_tsv	dev	285	926	1048	0.2353	0.2138	0.2241	1175	2024-05-31 12:30:13
+p_001_ner_en_tsv	test	0	0	0	0	0	0	1471	2024-05-31 13:47:32
+p_002_ner_es_tsv	test	0	0	0	0	0	0	4793	2024-05-31 13:47:32
