@@ -19,11 +19,18 @@
   "examples": 1,
   "expected_output": "Display results in the tsv format with the headers 'label' to annotate the entity as one of 'DNAMutation', 'SNP', 'SNP', 'DNAAllele', 'NucleotideChange-BaseChange', 'OtherMutation', 'Gene', 'Disease', 'Transcript' and 'span' for the identified entity. Provide each label and span in a new line.",
   "text": "Text: {}"
-},  {
+}, {
   "prompt_id": "p_004_ner_en_5_few_shot_guideline_tsv",
   "instruction": "Find the entities in the below Spanish language text. The number of entities found should match the number of instances the entity is mentioned in the text.",
   "guideline": "An entity is a variant on DNA sequence ('DNAMutation'), RS number ('SNP'), COSMIC mutation ('SNP'), Allele on DNA sequence ('DNAAllele'), wild type and mutations ('NucleotideChange-BaseChange'), variant entities with insufficient information ('OtherMutation'), gene ('Gene'), disease entities ('Disease') or Transcript ID ('Transcript').",
   "examples": 5,
+  "expected_output": "Display results in the tsv format with the headers 'label' to annotate the entity as one of 'DNAMutation', 'SNP', 'SNP', 'DNAAllele', 'NucleotideChange-BaseChange', 'OtherMutation', 'Gene', 'Disease', 'Transcript' and 'span' for the identified entity. Provide each label and span in a new line.",
+  "text": "Text: {}"
+}, {
+  "prompt_id": "p_004_ner_en_10_few_shot_guideline_tsv",
+  "instruction": "Find the entities in the below Spanish language text. The number of entities found should match the number of instances the entity is mentioned in the text.",
+  "guideline": "An entity is a variant on DNA sequence ('DNAMutation'), RS number ('SNP'), COSMIC mutation ('SNP'), Allele on DNA sequence ('DNAAllele'), wild type and mutations ('NucleotideChange-BaseChange'), variant entities with insufficient information ('OtherMutation'), gene ('Gene'), disease entities ('Disease') or Transcript ID ('Transcript').",
+  "examples": 10,
   "expected_output": "Display results in the tsv format with the headers 'label' to annotate the entity as one of 'DNAMutation', 'SNP', 'SNP', 'DNAAllele', 'NucleotideChange-BaseChange', 'OtherMutation', 'Gene', 'Disease', 'Transcript' and 'span' for the identified entity. Provide each label and span in a new line.",
   "text": "Text: {}"
 }
