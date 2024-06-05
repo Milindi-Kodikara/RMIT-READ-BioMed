@@ -1,8 +1,9 @@
-prompt_id	data_type	true_positive	false_positive	false_negative	precision	recall	f1	hallucination_count	date
-p_001_ner_en_tsv	dev	285	926	1048	0.2353	0.2138	0.2241	1175	2024-05-31 12:30:13
-p_001_ner_en_tsv	test	0	0	0	0.2147	0.2732	0.2404	1471	2024-05-31 13:47:32
-p_003_ner_en_one_shot_guideline_tsv	dev	596	640	737	0.4822	0.4471	0.464	2497	2024-06-03 10:36:07
-p_003_ner_en_one_shot_guideline_tsv	test	0	0	0	0.4931	0.5069	0.4999	2361	2024-06-03 11:33:19
-p_003_ner_en_one_shot_guideline_tsv	dev	680	623	653	0.5219	0.5101	0.5159	2237	2024-06-03 11:46:30
-p_004_ner_en_5_few_shot_guideline_tsv	dev	661	710	672	0.4821	0.4959	0.4889	863	2024-06-04 19:31:03
-p_003_ner_en_one_shot_guideline_tsv	dev	624	818	709	0.4327	0.4681	0.4497	1072	2024-06-04 19:53:28
+prompt_id	data_type	true_positive	false_positive	false_negative	precision	recall	f1	hallucination_count	total_result_count	date	notes
+p_001_ner_en_tsv	dev	285	926	1048	0.2353	0.2138	0.2241	1175		2024-05-31 12:30:13	
+p_001_ner_en_tsv	test	0	0	0	0.2147	0.2732	0.2404	1471		2024-05-31 13:47:32	
+p_003_ner_en_one_shot_guideline_tsv	dev	596	640	737	0.4822	0.4471	0.464	2497		2024-06-03 10:36:07	
+p_003_ner_en_one_shot_guideline_tsv	test	0	0	0	0.4931	0.5069	0.4999	2361		2024-06-03 11:33:19	
+p_003_ner_en_one_shot_guideline_tsv	dev	680	623	653	0.5219	0.5101	0.5159	2237		2024-06-03 11:46:30	
+p_004_ner_en_5_few_shot_guideline_tsv	dev	661	710	672	0.4821	0.4959	0.4889	863		2024-06-04 19:31:03	Using gpt-3.5turbo-16K
+p_003_ner_en_one_shot_guideline_tsv	dev	624	818	709	0.4327	0.4681	0.4497	1072		2024-06-04 19:53:28	
+p_004_ner_en_10_few_shot_guideline_tsv	dev	656	661	677	0.4981	0.4921	0.4951	566		2024-06-04 21:08:40	
