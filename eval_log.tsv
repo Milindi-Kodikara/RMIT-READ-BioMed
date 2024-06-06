@@ -1,9 +1,27 @@
 prompt_id	data_type	true_positive	false_positive	false_negative	precision	recall	f1	hallucination_count	total_result_count	date	notes
-p_001_ner_en_tsv	dev	285	926	1048	0.2353	0.2138	0.2241	1175		2024-05-31 12:30:13	
-p_001_ner_en_tsv	test	0	0	0	0.2147	0.2732	0.2404	1471		2024-05-31 13:47:32	
-p_003_ner_en_one_shot_guideline_tsv	dev	596	640	737	0.4822	0.4471	0.464	2497		2024-06-03 10:36:07	
-p_003_ner_en_one_shot_guideline_tsv	test	0	0	0	0.4931	0.5069	0.4999	2361		2024-06-03 11:33:19	
-p_003_ner_en_one_shot_guideline_tsv	dev	680	623	653	0.5219	0.5101	0.5159	2237		2024-06-03 11:46:30	
-p_004_ner_en_5_few_shot_guideline_tsv	dev	661	710	672	0.4821	0.4959	0.4889	863		2024-06-04 19:31:03	Using gpt-3.5turbo-16K
-p_003_ner_en_one_shot_guideline_tsv	dev	624	818	709	0.4327	0.4681	0.4497	1072		2024-06-04 19:53:28	
-p_004_ner_en_10_few_shot_guideline_tsv	dev	656	661	677	0.4981	0.4921	0.4951	566		2024-06-04 21:08:40	
+p_001_ner_en_tsv	dev	285	926	1048	0.2353	0.2138	0.2241	1175	0.0	2024-05-31 12:30:13	gpt-3.5-turbo
+p_001_ner_en_tsv	test	0	0	0	0.2147	0.2732	0.2404	1471	0.0	2024-05-31 13:47:32	gpt-3.5-turbo
+p_003_ner_en_one_shot_guideline_tsv	dev	596	640	737	0.4822	0.4471	0.464	2497	0.0	2024-06-03 10:36:07	gpt-3.5-turbo
+p_003_ner_en_one_shot_guideline_tsv	test	0	0	0	0.4931	0.5069	0.4999	2361	0.0	2024-06-03 11:33:19	gpt-3.5-turbo | submitted
+p_003_ner_en_one_shot_guideline_tsv	dev	680	623	653	0.5219	0.5101	0.5159	2237	0.0	2024-06-03 11:46:30	gpt-3.5-turbo
+p_004_ner_en_5_few_shot_guideline_tsv	dev	661	710	672	0.4821	0.4959	0.4889	863	0.0	2024-06-04 19:31:03	gpt-3.5-turbo-16K
+p_003_ner_en_one_shot_guideline_tsv	dev	624	818	709	0.4327	0.4681	0.4497	1072	0.0	2024-06-04 19:53:28	gpt-3.5-turbo-16K
+p_004_ner_en_10_few_shot_guideline_tsv	dev	656	661	677	0.4981	0.4921	0.4951	566	0.0	2024-06-04 21:08:40	gpt-3.5-turbo-16K
+p_001_ner_en_tsv	dev	236	684	1097	0.2565	0.177	0.2095	2357	3277.0	2024-06-05 15:55:08	gpt-3.5-turbo-16K
+p_002_ner_es_tsv	dev	344	1148	989	0.2306	0.2581	0.2435	3449	4941.0	2024-06-05 15:55:08	gpt-3.5-turbo-16K
+p_003_ner_en_one_shot_tsv	dev	548	574	785	0.4884	0.4111	0.4464	4242	5364.0	2024-06-05 15:55:08	gpt-3.5-turbo-16K
+p_004_ner_en_one_shot_guideline_tsv	dev	655	790	678	0.4533	0.4914	0.4716	869	2314.0	2024-06-05 15:55:08	gpt-3.5-turbo-16K
+p_005_ner_en_2_few_shot_guideline_tsv	dev	602	689	731	0.4663	0.4516	0.4588	1284	2575.0	2024-06-05 15:55:08	gpt-3.5-turbo-16K
+p_006_ner_en_5_few_shot_guideline_tsv	dev	681	716	652	0.4875	0.5109	0.4989	703	2100.0	2024-06-05 15:55:08	gpt-3.5-turbo-16K
+p_007_ner_en_10_few_shot_guideline_tsv	dev	644	678	689	0.4871	0.4831	0.4851	584	1906.0	2024-06-05 15:55:08	gpt-3.5-turbo-16K
+p_001_ner_en_tsv	dev	192	778	1141	0.1979	0.144	0.1667	156	1126.0	2024-06-05 18:49:18	gpt-3.5-turbo
+p_002_ner_es_tsv	dev	354	1010	979	0.2595	0.2656	0.2625	2524	3888.0	2024-06-05 18:49:18	gpt-3.5-turbo
+p_003_ner_en_one_shot_tsv	dev	524	707	809	0.4257	0.3931	0.4087	601	1832.0	2024-06-05 18:49:18	gpt-3.5-turbo
+p_004_ner_en_one_shot_guideline_tsv	dev	643	819	690	0.4398	0.4824	0.4601	1159	2621.0	2024-06-05 18:49:18	gpt-3.5-turbo
+p_005_ner_en_2_few_shot_guideline_tsv	dev	608	807	725	0.4297	0.4561	0.4425	771	2186.0	2024-06-05 18:49:18	gpt-3.5-turbo
+p_004_ner_en_one_shot_guideline_tsv	dev	633	714	700	0.4699	0.4749	0.4724	1846	3193.0	2024-06-06 10:32:22	gpt-3.5-turbo-16K
+p_005_ner_en_2_few_shot_guideline_tsv	dev	628	752	705	0.4551	0.4711	0.463	2815	4195.0	2024-06-06 10:32:22	gpt-3.5-turbo-16K
+p_006_ner_en_5_few_shot_guideline_tsv	dev	666	723	667	0.4795	0.4996	0.4893	511	1900.0	2024-06-06 10:32:22	gpt-3.5-turbo-16K
+p_007_ner_en_10_few_shot_guideline_tsv	dev	644	664	689	0.4924	0.4831	0.4877	492	1800.0	2024-06-06 10:32:22	gpt-3.5-turbo-16K
+p_008_ner_en_20_few_shot_guideline_tsv	dev	579	385	754	0.6006	0.4344	0.5041	446	1410.0	2024-06-06 10:32:22	gpt-3.5-turbo-16K
+p_008_ner_en_20_few_shot_guideline_tsv	test	0	0	0	0.4374	0.5902	0.5025	1075	2632.0	2024-06-06 11:14:20	gpt-3.5-turbo
