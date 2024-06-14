@@ -40,3 +40,21 @@ p_006_ner_en_5_few_shot_guideline_tsv	test	0	0	0	0.4686	0.5293	0.4971	1066	3467.
 p_007_ner_en_10_few_shot_guideline_tsv	test	0	0	0	0.4826	0.5483	0.5134	1028	3442.0	2024-06-07 12:11:03	gpt-3.5-turbo-16k | submitted
 p_008_ner_en_20_few_shot_guideline_tsv	test	0	0	0	0.6108	0.4974	0.5483	852	2586.0	2024-06-07 12:11:03	gpt-3.5-turbo-16k | submitted
 p_009_ner_en_instruction_2_one_shot_guideline_tsv_2	test	0	0	0	0.4135	0.4388	0.4258	2763	4996.0	2024-06-07 12:11:03	gpt-3.5-turbo-16k | submitted
+p_001_ner_en_tsv	dev	313	1138	1020	0.2157	0.2348	0.2249	780	2231.0	2024-06-13 23:33:15	gpt-3.5-turbo-16k
+p_001_ner_es_tsv	dev	394	747	939	0.3453	0.2956	0.3185	3288	4429.0	2024-06-13 23:33:15	gpt-3.5-turbo-16k
+p_002_ner_en_one_shot_tsv	dev	634	721	699	0.4679	0.4756	0.4717	1357	2712.0	2024-06-13 23:33:15	gpt-3.5-turbo-16k
+p_002_ner_es_one_shot_tsv	dev	610	781	723	0.4385	0.4576	0.4479	728	2119.0	2024-06-13 23:33:15	gpt-3.5-turbo-16k
+p_003_ner_en_one_shot_guideline_tsv	dev	603	730	730	0.4524	0.4524	0.4524	1059	2392.0	2024-06-13 23:33:15	gpt-3.5-turbo-16k
+p_003_ner_es_one_shot_guideline_tsv	dev	551	630	782	0.4666	0.4134	0.4383	441	1622.0	2024-06-13 23:33:15	gpt-3.5-turbo-16k
+p_004_ner_en_2_few_shot_guideline_tsv	dev	605	711	728	0.4597	0.4539	0.4568	622	1938.0	2024-06-13 23:33:15	gpt-3.5-turbo-16k
+p_004_ner_es_2_few_shot_guideline_tsv	dev	591	906	742	0.3948	0.4434	0.4177	1592	3089.0	2024-06-13 23:33:15	gpt-3.5-turbo-16k
+p_005_ner_en_5_few_shot_guideline_tsv	dev	685	814	648	0.4570	0.5139	0.4838	569	2068.0	2024-06-13 23:33:15	gpt-3.5-turbo-16k
+p_005_ner_es_5_few_shot_guideline_tsv	dev	666	873	667	0.4327	0.4996	0.4638	1681	3220.0	2024-06-13 23:33:15	gpt-3.5-turbo-16k
+p_006_ner_en_10_few_shot_guideline_tsv	dev	623	682	710	0.4774	0.4674	0.4723	408	1713.0	2024-06-13 23:33:15	gpt-3.5-turbo-16k
+p_006_ner_es_10_few_shot_guideline_tsv	dev	622	757	711	0.4511	0.4666	0.4587	463	1842.0	2024-06-13 23:33:15	gpt-3.5-turbo-16k
+p_007_ner_en_20_few_shot_guideline_tsv	dev	535	420	798	0.5602	0.4014	0.4677	600	1555.0	2024-06-13 23:33:15	gpt-3.5-turbo-16k
+p_007_ner_es_20_few_shot_guideline_tsv	dev	581	412	752	0.5851	0.4359	0.4996	387	1380.0	2024-06-13 23:33:15	gpt-3.5-turbo-16k
+p_008_ner_en_instruction_2_one_shot_guideline_tsv_2	dev	577	687	756	0.4565	0.4329	0.4444	1131	2395.0	2024-06-13 23:33:15	gpt-3.5-turbo-16k
+p_008_ner_es_instruction_2_one_shot_guideline_tsv_2	dev	625	722	708	0.4640	0.4689	0.4664	538	1885.0	2024-06-13 23:33:15	gpt-3.5-turbo-16k
+p_009_ner_en_instruction_2_10_few_shot_guideline_tsv_2	dev	669	713	664	0.4841	0.5019	0.4928	556	1938.0	2024-06-13 23:33:15	gpt-3.5-turbo-16k
+p_009_ner_es_instruction_2_10_few_shot_guideline_tsv_2	dev	659	755	674	0.4661	0.4944	0.4798	673	2087.0	2024-06-13 23:33:15	gpt-3.5-turbo-16k
