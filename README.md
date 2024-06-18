@@ -60,6 +60,9 @@ associated with simple prompting of LLMs in languages other than English.
       # GENERATE-BRAT-EVAL-ANNOTATIONS can be set to false if don't need BRAT annotations for Brat-Eval
       GENERATE-BRAT-EVAL-ANNOTATIONS=true
     ```
+
+
+5. \[Optional] Add custom prompts to the prompt library in `prompts.json`.
     
 ## Run 
 Run Jupyter notebook via IDE or via local host.
