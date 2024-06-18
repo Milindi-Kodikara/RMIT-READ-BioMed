@@ -63,6 +63,8 @@ associated with simple prompting of LLMs in languages other than English.
 
 
 5. \[Optional] Add custom prompts to the prompt library in `prompts.json`.
+   
+##### Note: The number of examples being added should not exceed the number of training texts available. 
     
 ## Run 
 Run Jupyter notebook via IDE or via local host.
