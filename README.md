@@ -1,5 +1,5 @@
 # honos
-A system for NER of genetic entities in biomedical literature. 
+The RMIT University system for NER of genetic entities in biomedical literature for the GenoVarDis shared task at IberLEF 2024.
 
 ## Project overview
 This is a system developed for the [GenoVarDis](https://codalab.lisn.upsaclay.fr/competitions/17733) shared task at [IberLEF 2024](https://sites.google.com/view/iberlef-2024/home),
