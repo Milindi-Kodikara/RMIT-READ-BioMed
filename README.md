@@ -67,14 +67,14 @@ Run Jupyter notebook via IDE or via local host.
 ## Evaluation
 [Brat-Eval](https://github.com/READ-BioMed/brateval) is the tool we recommend to evaluate this IE pipeline. 
 
-1. Create `helper.sh` script as follows:
+1. Create `helper.sh` script as follows, replace the <FOLDER_PATH>:
 ````
 for filename in ../honos/results/temp/eval/*.ann; do
   BASE_NAME=$(basename "$filename")
   mv "../honos/results/temp/eval/$BASE_NAME" "../honos/results/brateval/eval/$BASE_NAME"
   mv "../honos/results/temp/gold/$BASE_NAME" "../honos/results/brateval/gold/$BASE_NAME"
 
-  OUTPUT=$(mvn exec:java -Dexec.mainClass=au.com.nicta.csp.brateval.CompareEntities -Dexec.args="-e /Users/milindi/Documents/Honours/Projects/honos/results/brateval/eval -g /Users/milindi/Documents/Honours/Projects/honos/results/brateval/gold -s exact" | grep "all|")
+  OUTPUT=$(mvn exec:java -Dexec.mainClass=au.com.nicta.csp.brateval.CompareEntities -Dexec.args="-e /Users/<FOLDER_PATH>/honos/results/brateval/eval -g /Users/<FOLDER_PATH>/honos/results/brateval/gold -s exact" | grep "all|")
   touch output.txt
   printf "%s | %s\n" "$BASE_NAME" "$OUTPUT" >> output.txt
 
