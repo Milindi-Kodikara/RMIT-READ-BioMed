@@ -100,3 +100,5 @@ Milindi Kodikara
 Karin Verspoor
 
 &copy; 2024 Copyright for this project by its contributors.
+
+P.S READ stands for Reading, Extraction, and Annotation of Documents 😏
