@@ -1,4 +1,4 @@
-# honos
+# RMIT-READ-BioMed
 The RMIT University system for NER of genetic entities in biomedical literature for the GenoVarDis shared task at IberLEF 2024.
 
 ## Project overview
@@ -74,21 +74,21 @@ Run Jupyter notebook via IDE or via local host.
 
 1. Create `helper.sh` script as follows, replace the <FOLDER_PATH>:
 ````
-for filename in ../honos/results/temp/eval/*.ann; do
+for filename in ../RMIT-READ-BioMed/results/temp/eval/*.ann; do
   BASE_NAME=$(basename "$filename")
-  mv "../honos/results/temp/eval/$BASE_NAME" "../honos/results/brateval/eval/$BASE_NAME"
-  mv "../honos/results/temp/gold/$BASE_NAME" "../honos/results/brateval/gold/$BASE_NAME"
+  mv "../RMIT-READ-BioMed/results/temp/eval/$BASE_NAME" "../RMIT-READ-BioMed/results/brateval/eval/$BASE_NAME"
+  mv "../RMIT-READ-BioMed/results/temp/gold/$BASE_NAME" "../RMIT-READ-BioMed/results/brateval/gold/$BASE_NAME"
 
-  OUTPUT=$(mvn exec:java -Dexec.mainClass=au.com.nicta.csp.brateval.CompareEntities -Dexec.args="-e /Users/<FOLDER_PATH>/honos/results/brateval/eval -g /Users/<FOLDER_PATH>/honos/results/brateval/gold -s exact" | grep "all|")
+  OUTPUT=$(mvn exec:java -Dexec.mainClass=au.com.nicta.csp.brateval.CompareEntities -Dexec.args="-e <FOLDER_PATH>/RMIT-READ-BioMed/results/brateval/eval -g <FOLDER_PATH>/RMIT-READ-BioMed/results/brateval/gold -s exact" | grep "all|")
   touch output.txt
   printf "%s | %s\n" "$BASE_NAME" "$OUTPUT" >> output.txt
 
-  rm "../honos/results/brateval/eval/$BASE_NAME"
-  rm "../honos/results/brateval/gold/$BASE_NAME"
+  rm "../RMIT-READ-BioMed/results/brateval/eval/$BASE_NAME"
+  rm "../RMIT-READ-BioMed/results/brateval/gold/$BASE_NAME"
 done
 ````
 
-2. Ensure that `honos` and `brateval` repos are in the same folder
+2. Ensure that `RMIT-READ-BioMed`, `brateval` and `data` repos are in the same folder
 3. Ensure that `GENERATE-BRAT-EVAL-ANNOTATIONS` in the `.env` file is set to `true`
 4. Run the jupyter notebook -> Observe that `results` folder is populated
 5. Run `helper.sh`
