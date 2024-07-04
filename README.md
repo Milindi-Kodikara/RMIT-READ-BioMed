@@ -1,4 +1,4 @@
-# RMIT-READ-BioMed
+# RMIT READ-BioMed
 The RMIT University system for NER of genetic entities in biomedical literature for the GenoVarDis shared task at IberLEF 2024.
 
 ## Project overview
