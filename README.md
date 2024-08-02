@@ -1,6 +1,10 @@
-# RMIT READ-BioMed
-The RMIT University system for NER of genetic entities in biomedical literature for the GenoVarDis shared task at IberLEF 2024.
+# RMIT READ-BioMed Version 2.0
+The RMIT University system for exploring the Effectiveness of Cross-linguistic Extraction of Genetic Information using Generative Large Language Models.
 
+-------
+This `README.md` will be updated soon ~ 
+
+-------
 ## Project overview
 This is a system developed for the [GenoVarDis](https://codalab.lisn.upsaclay.fr/competitions/17733) shared task at [IberLEF 2024](https://sites.google.com/view/iberlef-2024/home),
 focusing on the task of Named Entity Recognition (NER) of genes, genetic variants, and associated diseases from
