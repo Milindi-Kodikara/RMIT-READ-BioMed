@@ -60,6 +60,9 @@ if __name__ == "__main__":
 
     cleaned_entities, hallucinations = result_cleaner(text, results)
 
+    # TODO: Clean up evaluation
+    evaluation_values = brat_eval(eval_log_filepath, generate_brat_eval_annotations, prompts, cleaned_entities, hallucinations, gold_standard_data, brat_eval_filepath, root_folder_filepath)
+
     for _, prompt in prompts.iterrows():
         prompt_id = prompt['prompt_id']
         hallucinated_results_subset = hallucinations[(hallucinations['prompt_id'] == prompt_id)]
@@ -67,8 +70,5 @@ if __name__ == "__main__":
         formatted_hallucinated_results = hallucinated_results_subset.loc[:, ['label', 'span']]
         filename = f'results/hallucinations/{prompt_id}_hallucinations.tsv'
         formatted_hallucinated_results.to_csv(filename, sep='\t', index=False)
-
-    # TODO: Clean up evaluation
-    evaluation_values = brat_eval(eval_log_filepath, generate_brat_eval_annotations, prompts, cleaned_entities, len(hallucinations), gold_standard_data, brat_eval_filepath, root_folder_filepath)
 
     # TODO: Analysis

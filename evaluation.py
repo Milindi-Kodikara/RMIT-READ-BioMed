@@ -41,7 +41,7 @@ def save_brat_output(brat, df_to_save=None, filename="./results/temp.tsv"):
         formatted_df_to_save.to_csv(f"{filename}.tsv", sep='\t', index=False, header=True)
 
 
-def brat_eval(eval_log_filepath, generate_brat_eval_annotations, prompts, cleaned_entities, len_hallucinations,
+def brat_eval(eval_log_filepath, generate_brat_eval_annotations, prompts, cleaned_entities, hallucinations,
               gold_standard_data,
               brat_eval_filepath,
               root_folder_filepath):
@@ -86,7 +86,8 @@ def brat_eval(eval_log_filepath, generate_brat_eval_annotations, prompts, cleane
                  'recall', 'f1', 'hallucination_count', 'entity_count', 'total_result_count', 'date', 'notes'])
 
     len_cleaned_entities = len(cleaned_entities)
-    total_entities = len_cleaned_entities + len_hallucinations
+    len_hallucinated_entities = len(hallucinations)
+    total_entities = len_cleaned_entities + len(hallucinations)
     date = datetime.today().strftime('%Y-%m-%d %H:%M:%S')
 
     for result in evaluation_script_output_decoded:
@@ -101,7 +102,7 @@ def brat_eval(eval_log_filepath, generate_brat_eval_annotations, prompts, cleane
             evaluation_values = pd.concat([evaluation_values, pd.DataFrame(
                 [{'prompt_id': prompt_id, 'true_positive': true_positive, 'false_positive': false_positive,
                   'false_negative': false_negative, 'precision': precision,
-                  'recall': recall, 'f1': f1, 'hallucination_count': len_hallucinations,
+                  'recall': recall, 'f1': f1, 'hallucination_count': len_hallucinated_entities,
                   'entity_count': len_cleaned_entities, 'total_result_count': total_entities, 'date': date,
                   'notes': ''},
                  ])], ignore_index=True)
