@@ -5,4 +5,11 @@
   "examples": 20,
   "expected_output": "Display results in the tsv format with the headers 'label' to annotate the entity as one of 'DNAMutation', 'SNP', 'SNP', 'DNAAllele', 'NucleotideChange-BaseChange', 'OtherMutation', 'Gene', 'Disease', 'Transcript' and 'span' for the identified entity. Provide each label and span in a new line.",
   "text": "Text: {}"
+}, {
+  "prompt_id": "p_007_ner_es_20_few_shot_guideline_tsv",
+  "instruction": "Encuentre las entidades en el siguiente texto en español. La cantidad de entidades encontradas debe coincidir con la cantidad de veces que se menciona la entidad en el texto.",
+  "guideline": "Una entidad es una variante en la secuencia de ADN ('DNAMutation'), número RS ('SNP'), mutación CÓSMICA ('SNP'), alelo en la secuencia de ADN ('DNAAllele'), tipo salvaje y mutaciones ( 'NucleotideChange-BaseChange'), entidades variantes con información insuficiente ('OtherMutation'), gen ('Gene'), entidades patológicas ('Disease') o ID de transcripción ('Transcript').",
+  "examples": 20,
+  "expected_output": "Muestra los resultados en formato tsv con los encabezados 'label' para anotar la entidad como una de 'DNAMutation', 'SNP', 'DNAAllele', 'NucleotideChange-BaseChange', 'OtherMutation', 'Gene', 'Disease', 'Transcript' y 'span' para la entidad identificada Proporcione cada etiqueta y intervalo en una nueva línea.",
+  "text": "Text: {}"
 }]

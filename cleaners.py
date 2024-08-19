@@ -18,18 +18,18 @@ type CleanerFunction = Callable[[str, str], CleanerFnResponse]
 pattern = '(?:[\d]{1,10}\|t\|)(?P<title>[\w\W]+)(?:\\n[\d]{1,20}\|a\|)(?P<abstract>[\w\W]+)'
 
 
-def clean_text(text):
+def clean_genovardis_text(text):
     matches = re.search(pattern, text)
     reformatted_text = f'{matches.group("title")}\n{matches.group("abstract")}'
     return reformatted_text
 
 
-def cleaner_geno_var_dis(text_filepath: str, annotation_filepath: str) -> CleanerFnResponse:
+def cleaner_genovardis(text_filepath: str, annotation_filepath: str) -> CleanerFnResponse:
     text_data = pd.read_csv(text_filepath, sep='\t', header=0)
     annotated_data = pd.read_csv(annotation_filepath, sep='\t', header=0)
 
-    text_data['text'] = [clean_text(text) for text in text_data['text']]
-
+    text_data['text'] = [clean_genovardis_text(text) for text in text_data['text']]
+    annotated_data.drop(columns=['filename'], axis=1)
     return text_data, annotated_data
 
 
@@ -39,9 +39,16 @@ def cleaner_variome(file_name: str, task_type: ...) -> CleanerFnResponse:
     return [], ""
 
 
+def cleaner_tbga(file_name: str, task_type: ...) -> CleanerFnResponse:
+    # return text, gold standard data
+    # TODO
+    return [], ""
+
+
 DATA_CLEANERS: dict[str, CleanerFunction] = {
-    "GenoVarDis": cleaner_geno_var_dis,
+    "GenoVarDis": cleaner_genovardis,
     "Variome": cleaner_variome,
+    "TBGA": cleaner_tbga,
 }
 
 

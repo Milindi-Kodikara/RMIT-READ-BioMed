@@ -1,13 +1,34 @@
-
 import abc
+import logging
 import os
+from typing import LiteralString, Any, List, Dict
+
 from openai import AzureOpenAI
 
 
 class Model(abc.ABC):
     @abc.abstractmethod
-    def generate_completions(self, input_texts: list[str], prompts: list[str], task: ...) -> list[str]:
+    def generate_result(self, prompt: str) -> str:
         pass
+
+    def get_results(self, embedded_prompts: list[list[dict[str, LiteralString | Any]]]) -> list[dict[str, Any]]:
+        results = []
+
+        for embedded_prompt in embedded_prompts:
+            pmid = embedded_prompt['pmid']
+
+            for prompt_item in embedded_prompt['prompts']:
+                prompt_id = prompt_item['prompt_id']
+                prompt = prompt_item['prompt']
+
+                generated_text_result = self.generate_result(prompt)
+
+                results.append({'pmid': pmid, 'prompt_id': prompt_id, 'result': generated_text_result})
+
+                # print(f'Prompt:\n{prompt}\n\nResponse:\n{generated_text_result} \n----------\n')
+                print(f'Prompt_id:\n{prompt_id}\n\npmid:\n{pmid}\n----------\n')
+
+        return results
 
 
 class GPTModel(Model):
@@ -19,17 +40,22 @@ class GPTModel(Model):
             api_version=os.environ["API-VERSION"],
             azure_endpoint=os.environ["ENDPOINT"]
         )
-
-    def generate_completions(self, input_texts: list[str], prompts: list[str], task: ...) -> list[str]:
-        self.client.chat.completions.create(model=self.deployment_name, messages=[{"role": "user", "content": "Hello, World!"}])
-        pass
+        logging.info("Model initialised.")
 
     def __call__(self, *args, **kwargs):
         pass
 
+    def generate_result(self, prompt: str) -> str:
+        response = self.client.chat.completions.create(model=self.deployment_name,
+                                                       messages=[{"role": "user", "content": prompt}])
+
+        generated_text_result = response.choices[0].message.content
+
+        return generated_text_result
+
 
 MODELS: dict[str, type[Model]] = {
-    "gpt": GPTModel
+    "GPT": GPTModel
 }
 
 
