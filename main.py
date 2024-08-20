@@ -84,7 +84,9 @@ if __name__ == "__main__":
         prompt_id = prompt['prompt_id']
         hallucinated_results_subset = hallucinations[(hallucinations['prompt_id'] == prompt_id)]
 
-        formatted_hallucinated_results = hallucinated_results_subset.loc[:, ['label', 'span']]
+        formatted_hallucinated_results = hallucinated_results_subset.loc[:, ['pmid', 'label', 'span', 'offset1',
+                                                                             'offset2']]
+
         filename = f'results/hallucinations/{prompt_id}_hallucinations.tsv'
         formatted_hallucinated_results.to_csv(filename, sep='\t', index=False)
 
