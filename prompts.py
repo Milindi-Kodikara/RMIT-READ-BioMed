@@ -27,6 +27,8 @@ def create_examples(train_text: DataFrame, train_gold_standard_data: DataFrame) 
 
     split_train_gold_standard_data = split_train_gold_standard_data.groupby('pmid')['label-span'].apply('\n'.join)
 
+    print(f'Split train gold:\n{split_train_gold_standard_data.head()}\n')
+
     merged_training_data = pd.merge(train_text, split_train_gold_standard_data, on="pmid")
 
     merged_training_data['text-label-span-en'] = [format_example(row, 'en') for _, row in
@@ -37,6 +39,9 @@ def create_examples(train_text: DataFrame, train_gold_standard_data: DataFrame) 
 
     examples_df = merged_training_data.loc[:, ['pmid', 'text-label-span-en', 'text-label-span-es']]
 
+    print(f'examples:\n{examples_df.head()}\n')
+    print(f'examples en:\n{examples_df.iloc[0]['text-label-span-en']}\n')
+    print(f'examples es:\n{examples_df.iloc[0]['text-label-span-es']}\n')
     return examples_df
 
 
@@ -74,9 +79,11 @@ def embed_prompts(
         train_gold_standard_data: DataFrame,
         prompts: DataFrame,
         task: str
-) -> list[list[dict[str, LiteralString | Any]]]:
+) -> list[dict[str, list[dict[str, LiteralString | Any]] | Any]]:
     examples_df = create_examples(train_text, train_gold_standard_data)
 
     embedded_prompts = [embed_data_in_prompts(row_data, examples_df, prompts) for index, row_data in text.iterrows()]
 
+    print(f'embedded prompt prompt id: {embedded_prompts[0]['prompts'][0]['prompt_id']}\n')
+    print(f'embedded prompt prompt:\n{embedded_prompts[0]['prompts'][0]['prompt']}\n')
     return embedded_prompts

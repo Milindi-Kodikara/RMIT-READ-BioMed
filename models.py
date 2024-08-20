@@ -11,7 +11,7 @@ class Model(abc.ABC):
     def generate_result(self, prompt: str) -> str:
         pass
 
-    def get_results(self, embedded_prompts: list[list[dict[str, LiteralString | Any]]]) -> list[dict[str, Any]]:
+    def get_results(self, embedded_prompts) -> list[dict[str, Any]]:
         results = []
 
         for embedded_prompt in embedded_prompts:

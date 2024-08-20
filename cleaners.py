@@ -28,8 +28,10 @@ def cleaner_genovardis(text_filepath: str, annotation_filepath: str) -> CleanerF
     text_data = pd.read_csv(text_filepath, sep='\t', header=0)
     annotated_data = pd.read_csv(annotation_filepath, sep='\t', header=0)
 
-    text_data['text'] = [clean_genovardis_text(text) for text in text_data['text']]
-    annotated_data.drop(columns=['filename'], axis=1)
+    # TODO: Remove this maybe
+    # text_data['text'] = [clean_genovardis_text(text) for text in text_data['text']]
+    text_data = text_data.drop(columns=['filename'], axis=1)
+    annotated_data = annotated_data.drop(columns=['filename'], axis=1)
     return text_data, annotated_data
 
 

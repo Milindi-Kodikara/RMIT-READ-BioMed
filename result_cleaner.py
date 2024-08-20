@@ -86,6 +86,7 @@ def get_hallucinations(text_df, extracted_entity_df):
 
 def result_cleaner(text, results):
     extracted_entities = extract_entities(results)
+    print(f"Extracted entities len: {len(extracted_entities)}\n{extracted_entities.head()}\n\n")
     hallucinated_entities = get_hallucinations(text, extracted_entities)
     correct_entities = extracted_entities[
         (extracted_entities['offset1'] != '-1') & (extracted_entities['offset2'] != '-1')]

@@ -35,10 +35,17 @@ def save_brat_output(brat, df_to_save=None, filename="./results/temp.tsv"):
 
         formatted_df_to_save = df_to_save.loc[:, ['mark', 'label-offsets', 'span']]
         formatted_df_to_save.to_csv(filename, sep='\t', index=False, header=False)
+        print('brat')
+        print(f'----BRAT----\nOriginal data len: {len(df_to_save)}, Reformatted len: {len(formatted_df_to_save)}\n')
+        print(f"Reformatted data:\n--------------------\n\n{formatted_df_to_save.head(5)}\n--------------------\n\n")
 
     if not brat:
         formatted_df_to_save = df_to_save.loc[:, ['pmid', 'label', 'offset1', 'offset2', 'span']]
         formatted_df_to_save.to_csv(f"{filename}.tsv", sep='\t', index=False, header=True)
+
+        print(f'not brat')
+        print(f'Original data len: {len(df_to_save)}, Reformatted len: {len(formatted_df_to_save)}\n')
+        print(f"Reformatted data:\n--------------------\n\n{formatted_df_to_save.head(5)}\n--------------------\n\n")
 
 
 def brat_eval(eval_log_filepath, generate_brat_eval_annotations, prompts, cleaned_entities, hallucinations,
