@@ -1,5 +1,4 @@
 import json
-import logging
 import os
 import pandas as pd
 from dotenv import load_dotenv
@@ -21,6 +20,7 @@ model_id = os.environ["MODEL-ID"]
 
 # Task
 task = os.environ["TASK"]
+annotations = os.environ["ANNOTATIONS"]
 prompt_filepath = os.environ["PROMPT-FILEPATH"]
 
 # Dataset
@@ -40,27 +40,16 @@ eval_log_filepath = os.environ["EVAL-FILEPATH"]
 
 if __name__ == "__main__":
     # Initialisation
-    logging.info("Initialising.")
+    print('--------------Initialising--------------\n')
     data_cleaner = get_cleaner(dataset_id)
-    logging.info("Data cleaned.")
-
     prompts = load_prompts(prompt_filepath)
-
-    logging.info("Prompts loaded.")
-
     model = get_model(model_id)
 
     # Clean datasets
-    print('--------------CLEANING DATASETS--------------')
+    print('--------------CLEANING DATASETS--------------\n')
     train_text, train_gold_standard_data = data_cleaner(train_text_filepath, train_annotation_filepath)
-    print(f"Training text data len: {len(train_text)}, Gold len: {len(train_gold_standard_data)}")
-    print(f'training text head:\n{train_text.head()}\n')
-    print(f'training gold head:\n{train_gold_standard_data.head()}\n')
 
     text, gold_standard_data = data_cleaner(text_filepath, annotation_filepath)
-    print(f"Text data len: {len(text)}, Gold len: {len(gold_standard_data)}")
-    print(f'text head:\n{text.head(1)}\n')
-    print(f'gold head:\n{gold_standard_data.head()}\n')
 
     # Data + Prompts
     print('--------------EMBED PROMPTS--------------\n\n')
@@ -72,8 +61,6 @@ if __name__ == "__main__":
 
     print('--------------POST PROCESSING--------------\n\n')
     cleaned_entities, hallucinations = result_cleaner(text, results)
-    print(f"Cleaned entities len: {len(cleaned_entities)}\n{cleaned_entities.head()}\n\n")
-    print(f"Hallucinated entities len: {len(hallucinations)}\n{hallucinations.head()}\n\n")
 
     # TODO: Clean up evaluation
     print('--------------EVALUATION--------------\n\n')

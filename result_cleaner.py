@@ -45,6 +45,7 @@ def extract_entities(results):
 
     return extracted_entities
 
+
 # TODO: Fix hallucinations
 def get_hallucinations(text_df, extracted_entity_df):
     # loop df, find each span, calculate the word length, find the indexes of each occurance

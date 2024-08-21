@@ -25,9 +25,6 @@ class Model(abc.ABC):
 
                 results.append({'pmid': pmid, 'prompt_id': prompt_id, 'result': generated_text_result})
 
-                # print(f'Prompt:\n{prompt}\n\nResponse:\n{generated_text_result} \n----------\n')
-                print(f'Prompt_id:\n{prompt_id}\n\npmid:\n{pmid}\n----------\n')
-
         return results
 
 

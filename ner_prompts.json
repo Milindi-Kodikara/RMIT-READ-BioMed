@@ -12,12 +12,4 @@
   "examples": 20,
   "expected_output": "Muestra los resultados en formato tsv con los encabezados 'label' para anotar la entidad como una de 'DNAMutation', 'SNP', 'DNAAllele', 'NucleotideChange-BaseChange', 'OtherMutation', 'Gene', 'Disease', 'Transcript' y 'span' para la entidad identificada Proporcione cada etiqueta y intervalo en una nueva línea.",
   "text": "Text: {}"
-}, {
-  "prompt_id": "p_001_re_en_zero_shot_guideline_tsv",
-  "instruction": "Find the disease, gene and relation entities in the below english language biomedical text.",
-  "guideline": "The relation is one of “therapeutic”, “biomarker” or “genomic_alterations”. If no relation is found the relation is “NA”.",
-  "examples": 0,
-  "expected_output": "Display results in the tsv format with the headers 'gene', 'disease', 'relation' to annotate the gene, disease, and relation entities. Provide each label and span in a new line.",
-  "text": "Text: {}"
-  }
-]
+}]
