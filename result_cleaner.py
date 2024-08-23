@@ -17,12 +17,10 @@ def extract_tuple(tuple_string, annotation_pattern):
 
 def extract_triplet(triplet_string, annotation_pattern):
     stripped_triplet_string = triplet_string.strip()
-    # TODO: See if NER would benefit from this
     stripped_triplet_string = re.split(r'\s{2,}', stripped_triplet_string)
     reformatted_triplet_string = '\t'.join(stripped_triplet_string)
+
     matches = re.search(annotation_pattern, reformatted_triplet_string)
-    print(annotation_pattern + '\n======\n')
-    print(reformatted_triplet_string + '\n======\n')
 
     if not matches:
         return
@@ -134,6 +132,7 @@ def get_hallucinations(text_df, extracted_entity_df):
     return hallucinated_results
 
 
+# TODO: Refactor this file, it is a mess, girl!
 def result_cleaner(text, results, annotation, task):
     extracted_entities = extract_entities(results, task, annotation)
 
