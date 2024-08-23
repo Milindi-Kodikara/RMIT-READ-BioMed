@@ -59,18 +59,16 @@ def cleaner_tbga(text_filepath: str, annotation_filepath: str = '') -> CleanerFn
         # mark1 label1 span1 offset1_start offset1_end
         # mark2 label2 span2 offset2_start offset2_end
         # relation_mark relation_type
-        df['mark1'] = 'T' + df.index.astype(str)
+        df['mark1'] = 'T' + df.index.astype(str) + '_gene'
         df['label1'] = 'Gene'
 
-        df['mark2'] = 'T' + (len(df) + df.index + 1).astype(str)
+        df['mark2'] = 'T' + df.index.astype(str) + '_disease'
         df['label2'] = 'Disease'
 
         df["relation_mark"] = 'R' + df.index.astype(str)
 
         df = df.rename(columns={"relation": "relation_type", "h.name": "span1",
                                 "h.pos": "span1_pos_len", "t.name": "span2", "t.pos": "span2_pos_len"})
-
-        print(df.head().to_string())
 
         df = df.dropna()
         df['offset1_start'] = 0
@@ -88,25 +86,13 @@ def cleaner_tbga(text_filepath: str, annotation_filepath: str = '') -> CleanerFn
         df['offset2_start'] = [row.span2_pos_len[0] for row in df.itertuples(index=False)]
         df['offset2_end'] = [(row.span2_pos_len[0] + row.span2_pos_len[1]) for row in df.itertuples(index=False)]
 
-        # NER -> T#     label offset1 offset2   span
-        df_ner_gene = df.loc[:, ['pmid', 'mark1', 'label1', 'offset1_start', 'offset1_end', 'span1']]
-        df_ner_gene = df_ner_gene.rename(
-            columns={'mark1': 'mark', 'label1': 'label', 'span1': 'span', 'offset1_start': 'offset1',
-                     'offset1_end': 'offset2'})
+        # NER -> T#     label offset1 offset2       span
+        # RE -> R#      relation_type Arg1:mark1 Arg2:mark2
+        annotated_data = df.loc[:, ['pmid', 'mark1', 'label1', 'offset1_start', 'offset1_end', 'span1',
+                                    'mark2', 'label2', 'offset2_start', 'offset2_end', 'span2',
+                                    'relation_mark', 'relation_type']]
 
-        df_ner_disease = df.loc[:, ['pmid', 'mark2', 'label2', 'offset2_start', 'offset2_end', 'span2']]
-        df_ner_disease = df_ner_disease.rename(
-            columns={'mark2': 'mark', 'label2': 'label', 'span2': 'span', 'offset2_start': 'offset1',
-                     'offset2_end': 'offset2'})
-
-        annotated_ner = pd.concat([df_ner_gene, df_ner_disease], ignore_index=True)
-
-        annotated_re = df.loc[:, ['pmid', "relation_mark", "relation_type", 'mark1', 'mark2']]
-        print(annotated_ner.head().to_string())
-        print(annotated_ner.tail().to_string())
-        print(annotated_re.head().to_string())
-
-    return text, {'ner': annotated_ner, 're': annotated_re}
+    return text, annotated_data
 
 
 DATA_CLEANERS: dict[str, CleanerFunction] = {
