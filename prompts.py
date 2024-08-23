@@ -1,4 +1,4 @@
-from typing import List, Dict, Any, LiteralString
+from typing import Any, LiteralString
 import pandas as pd
 from pandas import DataFrame
 
@@ -25,10 +25,10 @@ def format_example(row, cross_lang, task):
 
 # RE -> R#      relation_type Arg1:mark1 Arg2:mark2
 # NER -> T#     label offset1 offset2       span
-def create_examples_ner(train_text: DataFrame, train_gold_standard_data: DataFrame, task: str,
-                        cross_lang: bool) -> DataFrame:
+def create_examples(train_text: DataFrame, train_gold_standard_data: DataFrame, task: str,
+                    cross_lang: bool) -> DataFrame:
     if task == 'RE':
-        train_gold_standard_data['combination'] = [f"{row['relation_type']}\t{row['span1']}\t{row['span2']}"
+        train_gold_standard_data['combination'] = [f"{row['span1']}\t{row['span2']}\t{row['relation_type']}"
                                                    for _, row in train_gold_standard_data.iterrows()]
     else:
         train_gold_standard_data['combination'] = [f"{row['label']}\t{row['span']}" for _, row in
@@ -42,13 +42,11 @@ def create_examples_ner(train_text: DataFrame, train_gold_standard_data: DataFra
 
     merged_training_data['combination-en'] = [format_example(row, cross_lang, task) for _, row in
                                               merged_training_data.iterrows()]
-
     examples_df = merged_training_data.loc[:, ['pmid', 'combination-en']]
 
     if cross_lang:
         examples_df['combination-es'] = [format_example(row, cross_lang, task) for _, row in
                                          merged_training_data.iterrows()]
-
     return examples_df
 
 
@@ -88,10 +86,7 @@ def embed_prompts(
         task: str,
         cross_lang: bool
 ) -> list[dict[str, list[dict[str, LiteralString | Any]] | Any]]:
-    examples_df = create_examples_ner(train_text, train_gold_standard_data, task, cross_lang)
-
+    examples_df = create_examples(train_text, train_gold_standard_data, task, cross_lang)
     embedded_prompts = [embed_data_in_prompts(row_data, examples_df, prompts) for index, row_data in text.iterrows()]
 
-    print(f'embedded prompt prompt id: {embedded_prompts[0]['prompts'][0]['prompt_id']}\n')
-    print(f'embedded prompt prompt:\n{embedded_prompts[0]['prompts'][0]['prompt']}\n')
     return embedded_prompts

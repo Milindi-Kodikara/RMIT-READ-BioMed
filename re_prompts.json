@@ -3,14 +3,14 @@
   "instruction": "Find the disease, gene and relation entities in the below english language biomedical text.",
   "guideline": "The relation is one of “therapeutic”, “biomarker” or “genomic_alterations”. If no relation is found the relation is “NA”.",
   "examples": 0,
-  "expected_output": "Display results in the tsv format with the headers 'gene', 'disease', 'relation' to annotate the gene, disease, and relation entities. Provide each label and span in a new line.",
-  "text": "Text: {}"
+  "expected_output": "Display results in the tsv format with the column headers 'gene', 'disease', 'relation' to annotate the gene, disease, and relation entities. Provide each gene, disease, relation triplet in a new line.",
+  "text": "Text: '{}'"
   },{
   "prompt_id": "p_001_re_en_one_shot_guideline_tsv",
-  "instruction": "Find the disease, gene and relation entities in the below english language biomedical text.",
+  "instruction": "Find the gene, disease and relation entities in the below english language biomedical text.",
   "guideline": "The relation is one of “therapeutic”, “biomarker” or “genomic_alterations”. If no relation is found the relation is “NA”.",
   "examples": 1,
-  "expected_output": "Display results in the tsv format with the headers 'gene', 'disease', 'relation' to annotate the gene, disease, and relation entities. Provide each label and span in a new line.",
-  "text": "Text: {}"
+  "expected_output": "Display results in the tsv format with the column headers 'gene', 'disease', 'relation' to annotate the gene, disease, and relation entities. Provide each gene, disease, relation triplet in a new line.",
+  "text": "Text: '{}'"
 }
 ]
