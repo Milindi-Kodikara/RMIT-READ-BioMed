@@ -46,16 +46,17 @@ eval_log_filepath = os.environ["EVAL-FILEPATH"]
 
 if __name__ == "__main__":
     # Initialisation
-    print('--------------Initialising--------------\n')
+    print('--------------INITIALISING--------------\n\n')
     data_cleaner = get_cleaner(dataset_id)
     prompts = load_prompts(prompt_filepath)
     model = get_model(model_id)
 
     # Clean datasets
-    print('--------------CLEANING DATASETS--------------\n')
+    print('--------------CLEANING DATASETS--------------\n\n')
     train_text, train_gold_standard_data = data_cleaner(train_text_filepath, train_annotation_filepath)
 
     text, gold_standard_data = data_cleaner(text_filepath, annotation_filepath)
+    # TODO: Remove after testing
     text = text.head(2)
     # Data + Prompts
     print('--------------EMBED PROMPTS--------------\n\n')
@@ -65,9 +66,8 @@ if __name__ == "__main__":
     results = model.get_results(embedded_prompts)
 
     print('--------------POST PROCESSING--------------\n\n')
-    cleaned_entities, hallucinations = result_cleaner(text, results)
+    cleaned_entities, hallucinations = result_cleaner(text, results, annotations, task)
 
-    # TODO: Clean up evaluation
     print('--------------EVALUATION--------------\n\n')
     evaluation_values = brat_eval(eval_log_filepath, generate_brat_eval_annotations, prompts, cleaned_entities,
                                   hallucinations, gold_standard_data, brat_eval_filepath, root_folder_filepath)
