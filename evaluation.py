@@ -25,23 +25,50 @@ def create_directory(directory):
         os.mkdir(directory)
 
 
-def save_brat_output(brat, df_to_save=None, filename="./results/temp.tsv"):
+def save_brat_output(brat, task, df_to_save=None, filename="./results/temp.tsv"):
+    formatted_df_to_save = pd.DataFrame()
+    print('--------\nfilename: ', filename)
+
     if brat:
-        df_to_save["label-offsets"] = df_to_save.apply(
-            lambda df_row: f"{df_row['label']} {df_row['offset1']} {df_row['offset2']}", axis=1)
+        if task == 'NER':
+            df_to_save["label-offsets"] = df_to_save.apply(
+                lambda df_row: f"{df_row['label']} {df_row['offset1']} {df_row['offset2']}", axis=1)
 
-        if 'mark' not in df_to_save.columns:
-            df_to_save["mark"] = df_to_save.apply(lambda df_row: f"T{df_row.name + 1}", axis=1)
+            formatted_df_to_save = df_to_save.loc[:, ['mark', 'label-offsets', 'span']]
 
-        formatted_df_to_save = df_to_save.loc[:, ['mark', 'label-offsets', 'span']]
+        elif task == 'RE':
+            # get the ner bits
+            df_to_save["formatted_span1"] = df_to_save.apply(
+                lambda
+                    df_row: f"{df_row['mark1']}\t{df_row['label1']} {df_row['offset1_start']} {df_row['offset1_end']}\t{df_row['span1']}",
+                axis=1)
+
+            df_to_save["formatted_span2"] = df_to_save.apply(
+                lambda
+                    df_row: f"{df_row['mark2']}\t{df_row['label2']} {df_row['offset2_start']} {df_row['offset2_end']}\t{df_row['span2']}",
+                axis=1)
+
+            df_to_save["formatted_relation"] = df_to_save.apply(
+                lambda
+                    df_row: f"{df_row['relation_mark']}\t{df_row['relation_type']} Arg1:{df_row['mark1']} Arg2:{df_row['mark2']}",
+                axis=1)
+            print('df to save:\n', df_to_save.head().to_string())
+
+            formatted_df_to_save = pd.concat([df_to_save['formatted_span1'].rename('formatted'),
+                                             df_to_save['formatted_span2'].rename('formatted'),
+                                              df_to_save['formatted_relation'].rename('formatted')],
+                                             ignore_index=True, axis=0)
+
         formatted_df_to_save.to_csv(filename, sep='\t', index=False, header=False)
 
+        print('formatted df to save:\n', formatted_df_to_save.head().to_string())
+
     if not brat:
-        formatted_df_to_save = df_to_save.loc[:, ['pmid', 'label', 'offset1', 'offset2', 'span']]
-        formatted_df_to_save.to_csv(f"{filename}.tsv", sep='\t', index=False, header=True)
+        print('df to save:\n', df_to_save.head().to_string())
+        df_to_save.to_csv(f"{filename}.tsv", sep='\t', index=False, header=True)
 
 
-def brat_eval(eval_log_filepath, generate_brat_eval_annotations, prompts, cleaned_entities, hallucinations,
+def brat_eval(task, eval_log_filepath, generate_brat_eval_annotations, prompts, cleaned_entities, hallucinations,
               gold_standard_data,
               brat_eval_filepath,
               root_folder_filepath):
@@ -56,13 +83,10 @@ def brat_eval(eval_log_filepath, generate_brat_eval_annotations, prompts, cleane
     create_directory('./results/brateval/eval')
 
     if generate_brat_eval_annotations:
-
-        gold_annotations_df = gold_standard_data.drop(['mark'], axis=1)
-
         for _, prompt in prompts.iterrows():
             prompt_id = prompt['prompt_id']
             gold_annotations_filename = f'results/temp/gold/{prompt_id}.ann'
-            save_brat_output(True, gold_annotations_df, gold_annotations_filename)
+            save_brat_output(True, task, gold_standard_data, gold_annotations_filename)
 
     for _, prompt in prompts.iterrows():
         prompt_id = prompt['prompt_id']
@@ -71,11 +95,11 @@ def brat_eval(eval_log_filepath, generate_brat_eval_annotations, prompts, cleane
         # Save results in BRAT format
         if generate_brat_eval_annotations:
             results_brat_filename = f'results/temp/eval/{prompt_id}.ann'
-            save_brat_output(True, results_subset, results_brat_filename)
+            save_brat_output(True, task, results_subset, results_brat_filename)
 
         # Save whole result output
         results_filename = f'results/ordered_by_prompts/{prompt_id}'
-        save_brat_output(False, results_subset, results_filename)
+        save_brat_output(False, task, results_subset, results_filename)
 
     evaluation_script_output = subprocess.check_output(
         ['sh', './evaluation.sh', brat_eval_filepath, root_folder_filepath])

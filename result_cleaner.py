@@ -149,6 +149,7 @@ def mark_hallucinated_extra_spans(row_text, row, extracted_entity_df, prompt_id)
             extracted_entity_df.loc[index, 'offset_checked'] = True
 
 
+# TODO: Fix offsets missing issue
 def get_hallucinations(text_df, extracted_entity_df, task):
     # loop df, find each span, calculate the word length, find the indexes of each occurrence
     correct_entities = extracted_entity_df
@@ -184,8 +185,4 @@ def get_hallucinations(text_df, extracted_entity_df, task):
 
 def result_cleaner(text, results, annotation, task):
     extracted_entities = extract_entities(results, task, annotation)
-
-    print(f"Results len: {len(results)}\n{results}\n\n")
-    print(f"Extracted entities len: {len(extracted_entities)}\n{extracted_entities.head().to_string()}\n\n")
-
     return get_hallucinations(text, extracted_entities, task)
