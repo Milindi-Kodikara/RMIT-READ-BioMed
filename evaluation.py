@@ -1,3 +1,4 @@
+import csv
 import os
 import re
 from datetime import datetime
@@ -27,7 +28,6 @@ def create_directory(directory):
 
 def save_brat_output(brat, task, df_to_save=None, filename="./results/temp.tsv"):
     formatted_df_to_save = pd.DataFrame()
-    print('--------\nfilename: ', filename)
 
     if brat:
         if task == 'NER':
@@ -52,19 +52,15 @@ def save_brat_output(brat, task, df_to_save=None, filename="./results/temp.tsv")
                 lambda
                     df_row: f"{df_row['relation_mark']}\t{df_row['relation_type']} Arg1:{df_row['mark1']} Arg2:{df_row['mark2']}",
                 axis=1)
-            print('df to save:\n', df_to_save.head().to_string())
 
             formatted_df_to_save = pd.concat([df_to_save['formatted_span1'].rename('formatted'),
                                              df_to_save['formatted_span2'].rename('formatted'),
                                               df_to_save['formatted_relation'].rename('formatted')],
                                              ignore_index=True, axis=0)
 
-        formatted_df_to_save.to_csv(filename, sep='\t', index=False, header=False)
-
-        print('formatted df to save:\n', formatted_df_to_save.head().to_string())
+        formatted_df_to_save.to_csv(filename, index=False, header=False)
 
     if not brat:
-        print('df to save:\n', df_to_save.head().to_string())
         df_to_save.to_csv(f"{filename}.tsv", sep='\t', index=False, header=True)
 
 
