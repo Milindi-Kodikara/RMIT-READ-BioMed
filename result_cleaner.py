@@ -116,6 +116,14 @@ def mark_hallucinated_fabricated_spans(row_index, row_text, row, extracted_entit
 
             extracted_entity_df.loc[row_index, 'offset2_start'] = '-1'
             extracted_entity_df.loc[row_index, 'offset2_end'] = '-1'
+        elif not row['offsets_checked'] and span1 in row_text and span2 in row_text:
+            extracted_entity_df.loc[row_index, 'offset1_start'] = str(row_text.find(span1))
+            extracted_entity_df.loc[row_index, 'offset1_end'] = str(row_text.find(span1) + len(span1))
+
+            extracted_entity_df.loc[row_index, 'offset2_start'] = str(row_text.find(span2))
+            extracted_entity_df.loc[row_index, 'offset2_end'] = str(row_text.find(span2) + len(span2))
+
+            extracted_entity_df.loc[row_index, 'offsets_checked'] = True
 
 
 def mark_hallucinated_extra_spans(row_text, row, extracted_entity_df, prompt_id):

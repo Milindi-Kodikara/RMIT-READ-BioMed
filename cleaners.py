@@ -44,7 +44,6 @@ def cleaner_variome(file_name: str, task_type: ...) -> CleanerFnResponse:
 
 def cleaner_tbga(text_filepath: str, annotation_filepath: str = '') -> CleanerFnResponse:
     # return text, gold standard data
-    df = pd.DataFrame()
     with open(text_filepath, 'r') as f:
         test_data_list = f.read().split('\n')
         result = [ast.literal_eval('{%s}' % item[1:-1]) for item in test_data_list]

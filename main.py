@@ -56,8 +56,7 @@ if __name__ == "__main__":
     train_text, train_gold_standard_data = data_cleaner(train_text_filepath, train_annotation_filepath)
 
     text, gold_standard_data = data_cleaner(text_filepath, annotation_filepath)
-    # TODO: Remove after testing
-    text = text.head(2)
+
     # Data + Prompts
     print('--------------EMBED PROMPTS--------------\n\n')
     embedded_prompts = embed_prompts(text, train_text, train_gold_standard_data, prompts, task, cross_lang)
@@ -69,17 +68,14 @@ if __name__ == "__main__":
     cleaned_entities, hallucinations = result_cleaner(text, results, annotations, task)
 
     print('--------------EVALUATION--------------\n\n')
-    evaluation_values = brat_eval(eval_log_filepath, generate_brat_eval_annotations, prompts, cleaned_entities,
+    evaluation_values = brat_eval(task, eval_log_filepath, generate_brat_eval_annotations, prompts, cleaned_entities,
                                   hallucinations, gold_standard_data, brat_eval_filepath, root_folder_filepath)
 
     for _, prompt in prompts.iterrows():
         prompt_id = prompt['prompt_id']
         hallucinated_results_subset = hallucinations[(hallucinations['prompt_id'] == prompt_id)]
 
-        formatted_hallucinated_results = hallucinated_results_subset.loc[:, ['pmid', 'label', 'span', 'offset1',
-                                                                             'offset2']]
-
         filename = f'results/hallucinations/{prompt_id}_hallucinations.tsv'
-        formatted_hallucinated_results.to_csv(filename, sep='\t', index=False)
+        hallucinated_results_subset.to_csv(filename, sep='\t', index=False)
 
     # TODO: Analysis
