@@ -108,7 +108,12 @@ def mark_hallucinated_fabricated_spans(row_index, row_text, row, extracted_entit
         span1 = row['span1']
         span2 = row['span2']
 
-        if not row['offsets_checked'] and not span1 in row_text and not span2 in row_text:
+        if type(span1) is not str:
+            span1.astype(str)
+        elif type(span2) is not str:
+            span2.astype(str)
+
+        if not row['offsets_checked'] and (not span1 in row_text or not span2 in row_text):
             extracted_entity_df.loc[row_index, 'offsets_checked'] = True
 
             extracted_entity_df.loc[row_index, 'offset1_start'] = '-1'
