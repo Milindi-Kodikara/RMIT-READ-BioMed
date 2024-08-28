@@ -35,6 +35,7 @@ def save_brat_output(brat, task, df_to_save=None, filename="./results/temp.tsv")
                 lambda df_row: f"{df_row['label']} {df_row['offset1']} {df_row['offset2']}", axis=1)
 
             formatted_df_to_save = df_to_save.loc[:, ['mark', 'label-offsets', 'span']]
+            formatted_df_to_save.to_csv(filename, sep='\t', index=False, header=False)
 
         elif task == 'RE':
             # get the ner bits
@@ -58,7 +59,7 @@ def save_brat_output(brat, task, df_to_save=None, filename="./results/temp.tsv")
                                               df_to_save['formatted_relation'].rename('formatted')],
                                              ignore_index=True, axis=0)
 
-        formatted_df_to_save.to_csv(filename, index=False, header=False)
+            formatted_df_to_save.to_csv(filename, index=False, header=False)
 
     if not brat:
         df_to_save.to_csv(f"{filename}.tsv", sep='\t', index=False, header=True)
