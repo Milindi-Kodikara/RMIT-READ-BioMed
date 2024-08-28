@@ -37,7 +37,7 @@ def extract_entities(results, task, annotation):
 
     annotation_pattern = '^(?P<label>' + split_annotations + ')\s+(?P<span>[\w\W]+)$'
     extracted_entities = pd.DataFrame(
-        columns=['pmid', 'prompt_id', 'label', 'offset_checked', 'offset1', 'offset2', 'span'])
+        columns=['pmid', 'prompt_id', 'mark', 'label', 'offset_checked', 'offset1', 'offset2', 'span'])
 
     if task == 'RE':
         annotation_pattern = '^(?P<span1>.+)[\t](?P<span2>.+)[\t](?P<relation_type>' + split_annotations + ')$'
@@ -96,7 +96,7 @@ def extract_entities(results, task, annotation):
 
 
 def mark_hallucinated_fabricated_spans(row_index, row_text, row, extracted_entity_df, task):
-    if task == "NER":
+    if task == 'NER':
         span = row["span"]
 
         if not row['offset_checked'] and span not in row_text:
@@ -162,7 +162,6 @@ def mark_hallucinated_extra_spans(row_text, row, extracted_entity_df, prompt_id)
             extracted_entity_df.loc[index, 'offset_checked'] = True
 
 
-# TODO: Fix offsets missing issue
 def get_hallucinations(text_df, extracted_entity_df, task):
     # loop df, find each span, calculate the word length, find the indexes of each occurrence
     correct_entities = extracted_entity_df
@@ -180,8 +179,8 @@ def get_hallucinations(text_df, extracted_entity_df, task):
             mark_hallucinated_extra_spans(row_text, row, extracted_entity_df, prompt_id)
 
             hallucinated_results = extracted_entity_df[
-                (extracted_entity_df['offset1'] == '-1') & (extracted_entity_df['offset2'] == '-1') &
-                (extracted_entity_df['offset1'] == '-2') & (extracted_entity_df['offset2'] == '-2')]
+                ((extracted_entity_df['offset1'] == '-1') & (extracted_entity_df['offset2'] == '-1')) |
+                ((extracted_entity_df['offset1'] == '-2') & (extracted_entity_df['offset2'] == '-2'))]
 
             correct_entities = extracted_entity_df[
                 (extracted_entity_df['offset1'] != '-1') & (extracted_entity_df['offset2'] != '-1') &

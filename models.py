@@ -21,6 +21,8 @@ class Model(abc.ABC):
                 prompt_id = prompt_item['prompt_id']
                 prompt = prompt_item['prompt']
 
+                print(f'pmid: {pmid}\tprompt_id: {prompt_id}')
+
                 generated_text_result = self.generate_result(prompt)
 
                 results.append({'pmid': pmid, 'prompt_id': prompt_id, 'result': generated_text_result})
