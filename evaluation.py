@@ -14,7 +14,8 @@ def update_evaluation_log(eval_log_filepath, new_eval_df):
     else:
         eval_log_df = pd.DataFrame(
             columns=['prompt_id', 'true_positive', 'false_positive', 'false_negative', 'precision',
-                     'recall', 'f1', 'hallucination_count', 'entity_count', 'total_result_count', 'date', 'notes'])
+                     'recall', 'f1', 'hallucination_count', 'total_hallucinations', 'correct_entity_count',
+                     'total_correct_entity_count', 'all_entity_count', 'overall_entity_count', 'date', 'notes'])
 
     eval_log_df = pd.concat([eval_log_df, new_eval_df], ignore_index=True)
 
@@ -33,6 +34,9 @@ def save_brat_output(brat, task, df_to_save=None, filename="./results/temp.tsv")
         if task == 'NER':
             df_to_save["label-offsets"] = df_to_save.apply(
                 lambda df_row: f"{df_row['label']} {df_row['offset1']} {df_row['offset2']}", axis=1)
+
+            if 'mark' not in df_to_save.columns:
+                df_to_save["mark"] = df_to_save.apply(lambda df_row: f"T{df_row.name + 1}", axis=1)
 
             formatted_df_to_save = df_to_save.loc[:, ['mark', 'label-offsets', 'span']]
             formatted_df_to_save.to_csv(filename, sep='\t', index=False, header=False)
@@ -55,7 +59,7 @@ def save_brat_output(brat, task, df_to_save=None, filename="./results/temp.tsv")
                 axis=1)
 
             formatted_df_to_save = pd.concat([df_to_save['formatted_span1'].rename('formatted'),
-                                             df_to_save['formatted_span2'].rename('formatted'),
+                                              df_to_save['formatted_span2'].rename('formatted'),
                                               df_to_save['formatted_relation'].rename('formatted')],
                                              ignore_index=True, axis=0)
 
@@ -65,6 +69,7 @@ def save_brat_output(brat, task, df_to_save=None, filename="./results/temp.tsv")
         df_to_save.to_csv(f"{filename}.tsv", sep='\t', index=False, header=True)
 
 
+# TODO: Check with Karin if there is a common brateval command for NER + RE instead of chopping the two and using '-verbose' for RE
 def brat_eval(task, eval_log_filepath, generate_brat_eval_annotations, prompts, cleaned_entities, hallucinations,
               gold_standard_data,
               brat_eval_filepath,
@@ -80,6 +85,9 @@ def brat_eval(task, eval_log_filepath, generate_brat_eval_annotations, prompts, 
     create_directory('./results/brateval/eval')
 
     if generate_brat_eval_annotations:
+        if task == 'NER':
+            gold_standard_data = gold_standard_data.drop(['mark'], axis=1)
+
         for _, prompt in prompts.iterrows():
             prompt_id = prompt['prompt_id']
             gold_annotations_filename = f'results/temp/gold/{prompt_id}.ann'
@@ -104,11 +112,12 @@ def brat_eval(task, eval_log_filepath, generate_brat_eval_annotations, prompts, 
 
     evaluation_values = pd.DataFrame(
         columns=['prompt_id', 'true_positive', 'false_positive', 'false_negative', 'precision',
-                 'recall', 'f1', 'hallucination_count', 'entity_count', 'total_result_count', 'date', 'notes'])
+                 'recall', 'f1', 'hallucination_count', 'total_hallucinations', 'correct_entity_count',
+                 'total_correct_entity_count', 'all_entity_count', 'overall_entity_count', 'date', 'notes'])
 
-    len_cleaned_entities = len(cleaned_entities)
-    len_hallucinated_entities = len(hallucinations)
-    total_entities = len_cleaned_entities + len(hallucinations)
+    total_correct_entity_count = len(cleaned_entities)
+    total_hallucinations = len(hallucinations)
+    overall_entity_count = total_correct_entity_count + len(hallucinations)
     date = datetime.today().strftime('%Y-%m-%d %H:%M:%S')
 
     for result in evaluation_script_output_decoded:
@@ -120,11 +129,20 @@ def brat_eval(task, eval_log_filepath, generate_brat_eval_annotations, prompts, 
             true_positive, false_positive, false_negative, precision, recall, f1 = matches.group(
                 "values").strip().split("|")
 
+            formatted_prompt_id = prompt_id.replace('.ann', '')
+            correct_entity_count = len(cleaned_entities.loc[cleaned_entities['prompt_id'] == formatted_prompt_id])
+            hallucination_count = len(hallucinations.loc[hallucinations['prompt_id'] == formatted_prompt_id])
+            all_entity_count = correct_entity_count + hallucination_count
+
             evaluation_values = pd.concat([evaluation_values, pd.DataFrame(
                 [{'prompt_id': prompt_id, 'true_positive': true_positive, 'false_positive': false_positive,
                   'false_negative': false_negative, 'precision': precision,
-                  'recall': recall, 'f1': f1, 'hallucination_count': len_hallucinated_entities,
-                  'entity_count': len_cleaned_entities, 'total_result_count': total_entities, 'date': date,
+                  'recall': recall, 'f1': f1, 'hallucination_count': hallucination_count,
+                  'total_hallucinations': total_hallucinations,
+                  'correct_entity_count': correct_entity_count,
+                  'total_correct_entity_count': total_correct_entity_count,
+                  'all_entity_count': all_entity_count,
+                  'overall_entity_count': overall_entity_count, 'date': date,
                   'notes': ''},
                  ])], ignore_index=True)
 
