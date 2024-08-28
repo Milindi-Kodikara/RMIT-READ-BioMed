@@ -43,6 +43,7 @@ generate_brat_eval_annotations = os.environ["GENERATE-BRAT-EVAL-ANNOTATIONS"]
 brat_eval_filepath = os.environ["BRAT-EVAL-FILEPATH"]
 root_folder_filepath = os.environ["ROOT-FOLDER-FILEPATH"]
 eval_log_filepath = os.environ["EVAL-FILEPATH"]
+note = os.environ["NOTE"]
 
 if __name__ == "__main__":
     # Initialisation
@@ -69,7 +70,7 @@ if __name__ == "__main__":
 
     print('--------------EVALUATION--------------\n\n')
     evaluation_values = brat_eval(task, eval_log_filepath, generate_brat_eval_annotations, prompts, cleaned_entities,
-                                  hallucinations, gold_standard_data, brat_eval_filepath, root_folder_filepath)
+                                  hallucinations, gold_standard_data, brat_eval_filepath, root_folder_filepath, note)
 
     for _, prompt in prompts.iterrows():
         prompt_id = prompt['prompt_id']

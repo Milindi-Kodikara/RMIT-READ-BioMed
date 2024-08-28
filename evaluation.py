@@ -69,11 +69,10 @@ def save_brat_output(brat, task, df_to_save=None, filename="./results/temp.tsv")
         df_to_save.to_csv(f"{filename}.tsv", sep='\t', index=False, header=True)
 
 
-# TODO: Check with Karin if there is a common brateval command for NER + RE instead of chopping the two and using '-verbose' for RE
 def brat_eval(task, eval_log_filepath, generate_brat_eval_annotations, prompts, cleaned_entities, hallucinations,
               gold_standard_data,
               brat_eval_filepath,
-              root_folder_filepath):
+              root_folder_filepath, note):
     create_directory('./results')
     create_directory('./results/ordered_by_prompts')
     create_directory('./results/hallucinations')
@@ -143,7 +142,7 @@ def brat_eval(task, eval_log_filepath, generate_brat_eval_annotations, prompts, 
                   'total_correct_entity_count': total_correct_entity_count,
                   'all_entity_count': all_entity_count,
                   'overall_entity_count': overall_entity_count, 'date': date,
-                  'notes': ''},
+                  'notes': note},
                  ])], ignore_index=True)
 
     update_evaluation_log(eval_log_filepath, evaluation_values)
