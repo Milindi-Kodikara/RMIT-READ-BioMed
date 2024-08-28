@@ -154,10 +154,10 @@ def mark_hallucinated_extra_spans(row_text, row, extracted_entity_df, prompt_id)
                     extracted_entity_df.loc[index, 'offset1'] = str(span_start_indexes[span_count])
                     extracted_entity_df.loc[index, 'offset2'] = str(span_start_indexes[span_count] + span_length)
                     span_count = span_count + 1
-            else:
-                # this means that the span is an extra
-                extracted_entity_df.loc[index, 'offset1'] = '-2'
-                extracted_entity_df.loc[index, 'offset2'] = '-2'
+                else:
+                    # this means that the span is an extra
+                    extracted_entity_df.loc[index, 'offset1'] = '-2'
+                    extracted_entity_df.loc[index, 'offset2'] = '-2'
 
             extracted_entity_df.loc[index, 'offset_checked'] = True
 
