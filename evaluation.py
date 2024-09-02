@@ -41,7 +41,7 @@ def save_brat_output(brat, task, df_to_save=None, filename="./results/temp.tsv")
             formatted_df_to_save = df_to_save.loc[:, ['mark', 'label-offsets', 'span']]
             formatted_df_to_save.to_csv(filename, sep='\t', index=False, header=False)
 
-        elif task == 'RE':
+        elif task == 'RE' or task == 'NERRE':
             # get the ner bits
             df_to_save["formatted_span1"] = df_to_save.apply(
                 lambda

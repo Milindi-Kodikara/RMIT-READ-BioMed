@@ -17,6 +17,8 @@ def format_example(row, cross_lang, task):
 
     if task == 'RE':
         formatted_text_label = "gene\tdisease\trelation"
+    elif task == 'NERRE':
+        formatted_text_label = "label1\tspan1\tlabel2\tspan2\trelation"
     else:
         formatted_text_label = "label\tspan"
 
@@ -30,6 +32,10 @@ def create_examples(train_text: DataFrame, train_gold_standard_data: DataFrame, 
     if task == 'RE':
         train_gold_standard_data['combination'] = [f"{row['span1']}\t{row['span2']}\t{row['relation_type']}"
                                                    for _, row in train_gold_standard_data.iterrows()]
+    elif task == 'NERRE':
+        train_gold_standard_data['combination'] = [
+            f"{row['label1']}\t{row['span1']}\t{row['label2']}\t{row['span2']}\t{row['relation_type']}"
+            for _, row in train_gold_standard_data.iterrows()]
     else:
         train_gold_standard_data['combination'] = [f"{row['label']}\t{row['span']}" for _, row in
                                                    train_gold_standard_data.iterrows()]

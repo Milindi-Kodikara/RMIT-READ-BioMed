@@ -32,15 +32,63 @@ def extract_triplet(triplet_string, annotation_pattern):
     return {'span1': span1, 'span2': span2, 'relation_type': relation_type}
 
 
-def extract_entities(results, task, annotation):
-    split_annotations = annotation.replace(',', '|')
+def extract_quintuplet(quintuplet_string, annotation_pattern):
+    stripped_triplet_string = quintuplet_string.strip()
+    stripped_triplet_string = re.split(r'\s{2,}', stripped_triplet_string)
+    reformatted_triplet_string = '\t'.join(stripped_triplet_string)
 
-    annotation_pattern = '^(?P<label>' + split_annotations + ')\s+(?P<span>[\w\W]+)$'
-    extracted_entities = pd.DataFrame(
-        columns=['pmid', 'prompt_id', 'mark', 'label', 'offset_checked', 'offset1', 'offset2', 'span'])
+    matches = re.search(annotation_pattern, reformatted_triplet_string)
+
+    if not matches:
+        return
+
+    label1 = matches.group("label1").strip()
+    label2 = matches.group("label2").strip()
+
+    span1 = matches.group("span1").strip()
+    span2 = matches.group("span2").strip()
+    relation_type = matches.group("relation_type").strip()
+
+    return {'label1': label1, 'span1': span1, 'label2': label2, 'span2': span2, 'relation_type': relation_type}
+
+
+def determine_extraction_func(task, annotation_pattern, extracted_list):
+    if task == 'NER':
+        return [
+            extract_tuple(result_string, annotation_pattern) for result_string in
+            extracted_list]
 
     if task == 'RE':
+        return [extract_triplet(result_string, annotation_pattern) for result_string in
+                extracted_list]
+
+    if task == 'NERRE':
+        return [
+            extract_quintuplet(result_string, annotation_pattern) for result_string in
+            extracted_list]
+
+
+def extract_entities(results, task, ner_annotations, re_annotations):
+    annotation_pattern = ''
+    if task == 'NER':
+        split_annotations = ner_annotations.replace(',', '|')
+        annotation_pattern = '^(?P<label>' + split_annotations + ')\s+(?P<span>[\w\W]+)$'
+        extracted_entities = pd.DataFrame(
+            columns=['pmid', 'prompt_id', 'mark', 'label', 'offset_checked', 'offset1', 'offset2', 'span'])
+
+    if task == 'RE':
+        split_annotations = re_annotations.replace(',', '|')
         annotation_pattern = '^(?P<span1>.+)[\t](?P<span2>.+)[\t](?P<relation_type>' + split_annotations + ')$'
+        extracted_entities = pd.DataFrame(
+            columns=['pmid', 'prompt_id', 'offsets_checked', 'mark1', 'label1', 'offset1_start', 'offset1_end', 'span1',
+                     'mark2', 'label2', 'offset2_start', 'offset2_end', 'span2',
+                     'relation_mark', 'relation_type'])
+
+    if task == 'NERRE':
+        split_ner_annotations = ner_annotations.replace(',', '|')
+        split_re_annotations = re_annotations.replace(',', '|')
+
+        annotation_pattern = '^(?P<label1>' + split_ner_annotations + ')[\t](?P<span1>.+)[\t](?P<label2>' + split_ner_annotations + ')[\t](?P<span2>.+)[\t](?P<relation_type>' + split_re_annotations + ')$'
         extracted_entities = pd.DataFrame(
             columns=['pmid', 'prompt_id', 'offsets_checked', 'mark1', 'label1', 'offset1_start', 'offset1_end', 'span1',
                      'mark2', 'label2', 'offset2_start', 'offset2_end', 'span2',
@@ -53,10 +101,7 @@ def extract_entities(results, task, annotation):
 
         if result_string:
             extracted_list = result_string.splitlines()
-            extracted_items_list = [extract_triplet(result_string, annotation_pattern) for result_string in
-                                    extracted_list] if task == 'RE' else [
-                extract_tuple(result_string, annotation_pattern) for result_string in
-                extracted_list]
+            extracted_items_list = determine_extraction_func(task, annotation_pattern, extracted_list)
 
             for extracted_item in extracted_items_list:
                 if extracted_item:
@@ -90,6 +135,24 @@ def extract_entities(results, task, annotation):
                             "relation_mark": 'R' + str(len(extracted_entities)),
                             "relation_type": extracted_item['relation_type']
                         }
+                    elif task == 'NERRE':
+                        df_row = {
+                            "pmid": pmid,
+                            "prompt_id": prompt_id,
+                            "offsets_checked": False,
+                            "mark1": 'T_1_' + str(len(extracted_entities)),
+                            "label1": extracted_item['label1'],
+                            "offset1_start": '',
+                            "offset1_end": '',
+                            "span1": extracted_item['span1'],
+                            "mark2": 'T_2_' + str(len(extracted_entities)),
+                            "label2": extracted_item['label2'],
+                            "offset2_start": '',
+                            "offset2_end": '',
+                            "span2": extracted_item['span2'],
+                            "relation_mark": 'R' + str(len(extracted_entities)),
+                            "relation_type": extracted_item['relation_type']
+                        }
                     extracted_entities.loc[len(extracted_entities)] = df_row
 
     return extracted_entities
@@ -104,7 +167,7 @@ def mark_hallucinated_fabricated_spans(row_index, row_text, row, extracted_entit
             extracted_entity_df.loc[row_index, 'offset1'] = '-1'
             extracted_entity_df.loc[row_index, 'offset2'] = '-1'
 
-    if task == 'RE':
+    if task == 'RE' or task == 'NERRE':
         span1 = row['span1']
         span2 = row['span2']
 
@@ -131,6 +194,8 @@ def mark_hallucinated_fabricated_spans(row_index, row_text, row, extracted_entit
             extracted_entity_df.loc[row_index, 'offsets_checked'] = True
 
 
+# TODO: Refactor this for RE, NERRE coz there are duplicated rows with same spans and relation coz of multiple
+#  occurances of the same spans
 def mark_hallucinated_extra_spans(row_text, row, extracted_entity_df, prompt_id):
     if not row['offset_checked']:
         span = row['span']
@@ -185,7 +250,7 @@ def get_hallucinations(text_df, extracted_entity_df, task):
             correct_entities = extracted_entity_df[
                 (extracted_entity_df['offset1'] != '-1') & (extracted_entity_df['offset2'] != '-1') &
                 (extracted_entity_df['offset1'] != '-2') & (extracted_entity_df['offset2'] != '-2')]
-        elif task == 'RE':
+        elif task == 'RE' or task == 'NERRE':
             hallucinated_results = extracted_entity_df[
                 (extracted_entity_df['offset1_start'] == '-1') & (extracted_entity_df['offset2_start'] == '-1')]
 
@@ -195,6 +260,6 @@ def get_hallucinations(text_df, extracted_entity_df, task):
     return correct_entities, hallucinated_results
 
 
-def result_cleaner(text, results, annotation, task):
-    extracted_entities = extract_entities(results, task, annotation)
+def result_cleaner(text, results, ner_annotations, re_annotations, task):
+    extracted_entities = extract_entities(results, task, ner_annotations, re_annotations)
     return get_hallucinations(text, extracted_entities, task)

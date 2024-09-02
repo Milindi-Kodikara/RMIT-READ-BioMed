@@ -20,7 +20,8 @@ model_id = os.environ["MODEL-ID"]
 
 # Task
 task = os.environ["TASK"]
-annotations = os.environ["ANNOTATIONS"]
+ner_annotations = os.environ["NER-ANNOTATIONS"]
+re_annotations = os.environ["RE-ANNOTATIONS"]
 cross_lang = os.environ["CROSS-LANG"]
 if cross_lang == 'true':
     cross_lang = True
@@ -66,7 +67,7 @@ if __name__ == "__main__":
     results = model.get_results(embedded_prompts)
 
     print('--------------POST PROCESSING--------------\n\n')
-    cleaned_entities, hallucinations = result_cleaner(text, results, annotations, task)
+    cleaned_entities, hallucinations = result_cleaner(text, results, ner_annotations, re_annotations, task)
 
     print('--------------EVALUATION--------------\n\n')
     evaluation_values = brat_eval(task, eval_log_filepath, generate_brat_eval_annotations, prompts, cleaned_entities,

@@ -1,0 +1,16 @@
+[{
+  "prompt_id": "p_001_nerre_en_zero_shot_guideline_tsv",
+  "instruction": "Find the age, body-part, characteristic, cohort-patient, disease, ethnicity, gender, gene, mutation, patient, size entities and the relations between the entities from the below english language biomedical text.",
+  "guideline": "An entity is one of 'age', 'body-part', 'characteristic', 'cohort-patient', 'disease', 'ethnicity', 'gender', 'gene', 'mutation', 'patient', 'size'. The relation is either “has” or “relatedTo”.",
+  "examples": 0,
+  "expected_output": "Display results in tsv format with the exact column headers 'label1', 'span1' for the first pair of entity type and entity; 'label2', 'span2' for the second pair of entity type and entity, and 'relation' to annotate the tuples of entity type and extracted entity, and the relation between them. Provide each quintuplet in a new line.",
+  "text": "Text: '{}'"
+  },{
+  "prompt_id": "p_001_nerre_en_one_shot_guideline_tsv",
+  "instruction": "Find the age, body-part, characteristic, cohort-patient, disease, ethnicity, gender, gene, mutation, patient, size entities in the below english language biomedical text. Find the relations between the entities found.",
+  "guideline": "An entity is one of 'age', 'body-part', 'characteristic', 'cohort-patient', 'disease', 'ethnicity', 'gender', 'gene', 'mutation', 'patient', 'size'. The relation is either “has” or “relatedTo”.",
+  "examples": 1,
+  "expected_output": "Display results in tsv format with the exact column headers 'label1', 'span1' for the first pair of entity type and entity; 'label2', 'span2' for the second pair of entity type and entity, and 'relation' to annotate the tuples of entity type and extracted entity, and the relation between them. Provide each quintuplet in a new line.",
+  "text": "Text: '{}'"
+}
+]
