@@ -196,6 +196,7 @@ def mark_hallucinated_fabricated_spans(row_index, row_text, row, extracted_entit
 
 # TODO: Refactor this for RE, NERRE coz there are duplicated rows with same spans and relation coz of multiple
 #  occurances of the same spans
+# TODO: Check the offset calc in variomecorp
 def mark_hallucinated_extra_spans(row_text, row, extracted_entity_df, prompt_id):
     if not row['offset_checked']:
         span = row['span']

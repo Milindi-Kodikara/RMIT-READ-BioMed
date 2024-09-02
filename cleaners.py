@@ -52,7 +52,7 @@ def cleaner_variome(text_filepath: str, annotation_filepath: str = '') -> Cleane
     for text_file in text_files:
         with open(text_file, 'r') as f:
             pmid = text_file.stem
-            text = f.read().strip().replace('** IGNORE LINE **\n', '')
+            text = f.read()
             text_df.loc[len(text_df.index)] = [pmid, text]
 
     for annotation_file in annotation_files:
