@@ -105,12 +105,14 @@ def brat_eval(task, eval_log_filepath, generate_brat_eval_annotations, prompts, 
         results_filename = f'results/ordered_by_prompts/{prompt_id}'
         save_brat_output(False, task, results_subset, results_filename)
 
+    is_ner = 'true' if task == 'NER' else 'false'
     evaluation_script_output = subprocess.check_output(
-        ['sh', './evaluation.sh', brat_eval_filepath, root_folder_filepath])
+        ['sh', './evaluation.sh', brat_eval_filepath, root_folder_filepath, is_ner])
     evaluation_script_output_decoded = evaluation_script_output.decode("utf-8").split("::")
 
     evaluation_values = pd.DataFrame(
-        columns=['prompt_id', 'true_positive', 'false_positive', 'false_negative', 'precision',
+        columns=['prompt_id', 'task', 'true_positive', 'false_positive', 'false_negative', 'false_positive_relations',
+                 'false_negative_relations', 'precision',
                  'recall', 'f1', 'hallucination_count', 'total_hallucinations', 'correct_entity_count',
                  'total_correct_entity_count', 'all_entity_count', 'overall_entity_count', 'date', 'notes'])
 
@@ -125,8 +127,17 @@ def brat_eval(task, eval_log_filepath, generate_brat_eval_annotations, prompts, 
 
         if matches:
             prompt_id = matches.group("prompt_id").strip()
-            true_positive, false_positive, false_negative, precision, recall, f1 = matches.group(
-                "values").strip().split("|")
+            false_positive_relations = ''
+            false_negative_relations = ''
+
+            if is_ner:
+                true_positive, false_positive, false_negative, precision, recall, f1 = matches.group(
+                    "values").strip().split("|")
+
+            if not is_ner:
+                (true_positive, false_positive, false_negative, precision,
+                 recall, f1, false_positive_relations, false_negative_relations) = matches.group(
+                    "values").strip().split("|")
 
             formatted_prompt_id = prompt_id.replace('.ann', '')
             correct_entity_count = len(cleaned_entities.loc[cleaned_entities['prompt_id'] == formatted_prompt_id])
@@ -134,8 +145,13 @@ def brat_eval(task, eval_log_filepath, generate_brat_eval_annotations, prompts, 
             all_entity_count = correct_entity_count + hallucination_count
 
             evaluation_values = pd.concat([evaluation_values, pd.DataFrame(
-                [{'prompt_id': prompt_id, 'true_positive': true_positive, 'false_positive': false_positive,
-                  'false_negative': false_negative, 'precision': precision,
+                [{'prompt_id': prompt_id,
+                  'true_positive': true_positive,
+                  'false_positive': false_positive,
+                  'false_negative': false_negative,
+                  'false_positive_relations': false_positive_relations,
+                  'false_negative_relations': false_negative_relations,
+                  'precision': precision,
                   'recall': recall, 'f1': f1, 'hallucination_count': hallucination_count,
                   'total_hallucinations': total_hallucinations,
                   'correct_entity_count': correct_entity_count,
