@@ -13,13 +13,14 @@ def update_evaluation_log(eval_log_filepath, new_eval_df):
         eval_log_df = pd.read_csv(eval_log_filepath, sep='\t', header=0)
     else:
         eval_log_df = pd.DataFrame(
-            columns=['prompt_id', 'true_positive', 'false_positive', 'false_negative', 'precision',
+            columns=['prompt_id', 'task', 'true_positive', 'false_positive', 'false_negative',
+                     'false_positive_relations', 'false_negative_relations', 'precision',
                      'recall', 'f1', 'hallucination_count', 'total_hallucinations', 'correct_entity_count',
                      'total_correct_entity_count', 'all_entity_count', 'overall_entity_count', 'date', 'notes'])
 
     eval_log_df = pd.concat([eval_log_df, new_eval_df], ignore_index=True)
 
-    eval_log_df.to_csv('eval_log.tsv', sep='\t', index=False, header=True)
+    eval_log_df.to_csv('./results/eval_log.tsv', sep='\t', index=False, header=True)
 
 
 def create_directory(directory):
@@ -146,6 +147,7 @@ def brat_eval(task, eval_log_filepath, generate_brat_eval_annotations, prompts, 
 
             evaluation_values = pd.concat([evaluation_values, pd.DataFrame(
                 [{'prompt_id': prompt_id,
+                  'task': task,
                   'true_positive': true_positive,
                   'false_positive': false_positive,
                   'false_negative': false_negative,
