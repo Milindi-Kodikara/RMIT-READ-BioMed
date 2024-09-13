@@ -2,10 +2,14 @@ import csv
 import os
 import re
 from datetime import datetime
+
+import numpy as np
 import pandas as pd
 import subprocess
 
-eval_pattern = '(?P<prompt_id>.+.ann)(?:\|tp\|fp\|fn\|precision\|recall\|f1\\nall\|)(?P<values>[\w\W|]+)'
+eval_pattern_ner = r'(?P<prompt_id>.+.ann)(?:\|tp\|fp\|fn\|precision\|recall\|f1\\nall\|)(?P<values>[\w\W|]+)'
+eval_pattern_re = r'(?P<prompt_id>[\w\_]+)\.annall(?P<values>((?:\|\w+:)(\d+\.?\d*)+)+)'
+relation_pattern = r'(?:\|\w+:)(\d+\.?\d*)'
 
 
 def update_evaluation_log(eval_log_filepath, new_eval_df):
@@ -20,7 +24,7 @@ def update_evaluation_log(eval_log_filepath, new_eval_df):
 
     eval_log_df = pd.concat([eval_log_df, new_eval_df], ignore_index=True)
 
-    eval_log_df.to_csv('./results/eval_log.tsv', sep='\t', index=False, header=True)
+    eval_log_df.to_csv(eval_log_filepath, sep='\t', index=False, header=True)
 
 
 def create_directory(directory):
@@ -29,8 +33,6 @@ def create_directory(directory):
 
 
 def save_brat_output(brat, task, df_to_save=None, filename="./results/temp.tsv"):
-    formatted_df_to_save = pd.DataFrame()
-
     if brat:
         if task == 'NER':
             df_to_save["label-offsets"] = df_to_save.apply(
@@ -64,7 +66,7 @@ def save_brat_output(brat, task, df_to_save=None, filename="./results/temp.tsv")
                                               df_to_save['formatted_relation'].rename('formatted')],
                                              ignore_index=True, axis=0)
 
-            formatted_df_to_save.to_csv(filename, index=False, header=False)
+            np.savetxt(filename, formatted_df_to_save, fmt='%s')
 
     if not brat:
         df_to_save.to_csv(f"{filename}.tsv", sep='\t', index=False, header=True)
@@ -124,21 +126,23 @@ def brat_eval(task, eval_log_filepath, generate_brat_eval_annotations, prompts, 
 
     for result in evaluation_script_output_decoded:
         stripped_result = result.strip()
-        matches = re.search(eval_pattern, stripped_result)
-
+        matches = re.search(eval_pattern_re,
+                            stripped_result)
         if matches:
             prompt_id = matches.group("prompt_id").strip()
             false_positive_relations = ''
             false_negative_relations = ''
 
-            if is_ner:
+            if task == 'NER':
                 true_positive, false_positive, false_negative, precision, recall, f1 = matches.group(
                     "values").strip().split("|")
 
-            if not is_ner:
+            if not task == 'NER':
+                relations = matches.group("values")
+
                 (true_positive, false_positive, false_negative, precision,
-                 recall, f1, false_positive_relations, false_negative_relations) = matches.group(
-                    "values").strip().split("|")
+                 recall, f1, false_positive_relations, false_negative_relations) = re.findall(relation_pattern,
+                                                                                              relations)
 
             formatted_prompt_id = prompt_id.replace('.ann', '')
             correct_entity_count = len(cleaned_entities.loc[cleaned_entities['prompt_id'] == formatted_prompt_id])
