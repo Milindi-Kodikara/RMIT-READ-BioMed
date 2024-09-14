@@ -7,7 +7,7 @@ import numpy as np
 import pandas as pd
 import subprocess
 
-eval_pattern_ner = r'(?P<prompt_id>.+.ann)(?:\|tp\|fp\|fn\|precision\|recall\|f1\\nall\|)(?P<values>[\w\W|]+)'
+eval_pattern_ner = r'(?P<prompt_id>.+)\.ann(?:\|tp\|fp\|fn\|precision\|recall\|f1\nall\|)(?P<values>[\w\W|]+)'
 eval_pattern_re = r'(?P<prompt_id>[\w\_]+)\.annall(?P<values>((?:\|\w+:)(\d+\.?\d*)+)+)'
 relation_pattern = r'(?:\|\w+:)(\d+\.?\d*)'
 
@@ -126,8 +126,8 @@ def brat_eval(task, eval_log_filepath, generate_brat_eval_annotations, prompts, 
 
     for result in evaluation_script_output_decoded:
         stripped_result = result.strip()
-        matches = re.search(eval_pattern_re,
-                            stripped_result)
+        matches = re.search(eval_pattern_ner, stripped_result) if task == 'NER' else re.search(eval_pattern_re,
+                                                                                               stripped_result)
         if matches:
             prompt_id = matches.group("prompt_id").strip()
             false_positive_relations = ''
