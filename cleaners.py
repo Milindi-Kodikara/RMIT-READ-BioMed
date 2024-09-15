@@ -112,6 +112,7 @@ def cleaner_tbga(text_filepath: str, annotation_filepath: str = '') -> CleanerFn
         test_data_list = f.read().split('\n')
         result = [ast.literal_eval('{%s}' % item[1:-1]) for item in test_data_list]
         df = pd.json_normalize(result)
+        df = df.dropna()
 
         df['pmid'] = df.index
         # create text_df
