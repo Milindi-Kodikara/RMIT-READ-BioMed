@@ -13,6 +13,7 @@ from models import get_model
 from prompts import *
 from result_cleaner import *
 from evaluation import *
+from analysis import *
 
 # Inputs
 # Model
@@ -53,31 +54,22 @@ if __name__ == "__main__":
     prompts = load_prompts(prompt_filepath)
     model = get_model(model_id)
 
+    print('--------------PRE-PROCESSING DATASETS--------------\n\n')
     # Clean datasets
-    print('--------------CLEANING DATASETS--------------\n\n')
     train_text, train_gold_standard_data = data_cleaner(train_text_filepath, train_annotation_filepath)
-
     text, gold_standard_data = data_cleaner(text_filepath, annotation_filepath)
-
     # Data + Prompts
-    print('--------------EMBED PROMPTS--------------\n\n')
     embedded_prompts = embed_prompts(text, train_text, train_gold_standard_data, prompts, task, cross_lang)
 
     print('--------------RUN MODEL--------------\n\n')
     results = model.get_results(embedded_prompts)
 
-    print('--------------POST PROCESSING--------------\n\n')
+    print('--------------POST-PROCESSING--------------\n\n')
     cleaned_entities, hallucinations = result_cleaner(text, results, ner_annotations, re_annotations, task)
 
     print('--------------EVALUATION--------------\n\n')
-    evaluation_values = brat_eval(task, eval_log_filepath, generate_brat_eval_annotations, prompts, cleaned_entities,
-                                  hallucinations, gold_standard_data, brat_eval_filepath, root_folder_filepath, note)
+    evaluation_values = evaluate(task, eval_log_filepath, generate_brat_eval_annotations, prompts, cleaned_entities,
+                                 hallucinations, gold_standard_data, brat_eval_filepath, root_folder_filepath, note)
 
-    for _, prompt in prompts.iterrows():
-        prompt_id = prompt['prompt_id']
-        hallucinated_results_subset = hallucinations[(hallucinations['prompt_id'] == prompt_id)]
-
-        filename = f'results/hallucinations/{prompt_id}_hallucinations.tsv'
-        hallucinated_results_subset.to_csv(filename, sep='\t', index=False)
-
-    # TODO: Analysis
+    print('--------------ANALYSIS--------------\n\n')
+    analysis(cleaned_entities, hallucinations, evaluation_values, f'./results/analysis')

@@ -72,10 +72,19 @@ def save_brat_output(brat, task, df_to_save=None, filename="./results/temp.tsv")
         df_to_save.to_csv(f"{filename}.tsv", sep='\t', index=False, header=True)
 
 
-def brat_eval(task, eval_log_filepath, generate_brat_eval_annotations, prompts, cleaned_entities, hallucinations,
-              gold_standard_data,
-              brat_eval_filepath,
-              root_folder_filepath, note):
+def save_hallucinations(prompts, hallucinations):
+    for _, prompt in prompts.iterrows():
+        prompt_id = prompt['prompt_id']
+        hallucinated_results_subset = hallucinations[(hallucinations['prompt_id'] == prompt_id)]
+
+        filename = f'results/hallucinations/{prompt_id}_hallucinations.tsv'
+        hallucinated_results_subset.to_csv(filename, sep='\t', index=False)
+
+
+def evaluate(task, eval_log_filepath, generate_brat_eval_annotations, prompts, cleaned_entities, hallucinations,
+             gold_standard_data,
+             brat_eval_filepath,
+             root_folder_filepath, note):
     create_directory('./results')
     create_directory('./results/ordered_by_prompts')
     create_directory('./results/hallucinations')
@@ -168,5 +177,6 @@ def brat_eval(task, eval_log_filepath, generate_brat_eval_annotations, prompts, 
                  ])], ignore_index=True)
 
     update_evaluation_log(eval_log_filepath, evaluation_values)
+    save_hallucinations(prompts, hallucinations)
 
     return evaluation_values
