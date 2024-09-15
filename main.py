@@ -72,4 +72,4 @@ if __name__ == "__main__":
                                  hallucinations, gold_standard_data, brat_eval_filepath, root_folder_filepath, note)
 
     print('--------------ANALYSIS--------------\n\n')
-    analysis(cleaned_entities, hallucinations, evaluation_values, f'./results/analysis')
+    analysis()
