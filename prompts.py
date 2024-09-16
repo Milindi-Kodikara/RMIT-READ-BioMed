@@ -56,7 +56,7 @@ def create_examples(train_text: DataFrame, train_gold_standard_data: DataFrame, 
     return examples_df
 
 
-def embed_data_in_prompts(row_data, examples_df, prompts):
+def embed_data_in_prompts(row_data, examples_df, prompts, cross_lang):
     embedded_prompts = []
     pmid = row_data['pmid']
     data_text = row_data['text']
@@ -66,7 +66,7 @@ def embed_data_in_prompts(row_data, examples_df, prompts):
         guideline = row_prompt['guideline']
         no_of_examples = row_prompt['examples']
 
-        if "es" in row_prompt['prompt_id']:
+        if "es" in row_prompt['prompt_id'] and cross_lang:
             examples = '\n'.join(examples_df.iloc[: no_of_examples]['combination-es'])
         else:
             examples = '\n'.join(examples_df.iloc[: no_of_examples]['combination-en'])
@@ -93,6 +93,6 @@ def embed_prompts(
         cross_lang: bool
 ) -> list[dict[str, list[dict[str, LiteralString | Any]] | Any]]:
     examples_df = create_examples(train_text, train_gold_standard_data, task, cross_lang)
-    embedded_prompts = [embed_data_in_prompts(row_data, examples_df, prompts) for index, row_data in text.iterrows()]
+    embedded_prompts = [embed_data_in_prompts(row_data, examples_df, prompts, cross_lang) for index, row_data in text.iterrows()]
 
     return embedded_prompts
