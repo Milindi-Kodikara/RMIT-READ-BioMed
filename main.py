@@ -70,6 +70,7 @@ if __name__ == "__main__":
     print('--------------EVALUATION--------------\n\n')
     evaluation_values = evaluate(task, eval_log_filepath, generate_brat_eval_annotations, prompts, cleaned_entities,
                                  hallucinations, gold_standard_data, brat_eval_filepath, root_folder_filepath, note)
+    compute_dataset_details(dataset_id, task, train_text, train_gold_standard_data, text, gold_standard_data)
 
     print('--------------ANALYSIS--------------\n\n')
     analysis()
