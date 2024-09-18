@@ -112,8 +112,8 @@ def compute_dataset_details(dataset_id, task, train_text, train_gold_standard_da
 
 
 def save_dataset_details(new_dataset_details_df, new_gold_annotations_type_count_df):
-    dataset_details_filename = 'dataset_details/dataset_details.tsv'
-    gold_annotation_type_count_filename = f'dataset_details/gold_annotation_type_count.tsv'
+    dataset_details_filename = './results/dataset_details/dataset_details.tsv'
+    gold_annotation_type_count_filename = f'./results/dataset_details/gold_annotation_type_count.tsv'
 
     if os.path.isfile(dataset_details_filename) and os.path.isfile(gold_annotation_type_count_filename):
         dataset_details_df = pd.read_csv(dataset_details_filename, sep='\t', header=0)
