@@ -1,57 +1,66 @@
-[{
-  "prompt_id": "p_001_ner_en_zero_shot_guideline_tsv",
-  "instruction": "Find the entities in the below Spanish language text. The number of entities found should match the number of instances the entity is mentioned in the text.",
-  "guideline": "An entity is a variant on DNA sequence ('DNAMutation'), RS number ('SNP'), COSMIC mutation ('SNP'), Allele on DNA sequence ('DNAAllele'), wild type and mutations ('NucleotideChange-BaseChange'), variant entities with insufficient information ('OtherMutation'), gene ('Gene'), disease entities ('Disease') or Transcript ID ('Transcript').",
-  "examples": 0,
-  "expected_output": "Display results in the tsv format with the headers 'label' to annotate the entity as one of 'DNAMutation', 'SNP', 'SNP', 'DNAAllele', 'NucleotideChange-BaseChange', 'OtherMutation', 'Gene', 'Disease', 'Transcript' and 'span' for the identified entity. Provide each label and span in a new line.",
-  "text": "Text: {}"
-}, {
-  "prompt_id": "p_001_ner_es_zero_shot_guideline_tsv",
-  "instruction": "Encuentre las entidades en el siguiente texto en español. La cantidad de entidades encontradas debe coincidir con la cantidad de veces que se menciona la entidad en el texto.",
-  "guideline": "Una entidad es una variante en la secuencia de ADN ('DNAMutation'), número RS ('SNP'), mutación CÓSMICA ('SNP'), alelo en la secuencia de ADN ('DNAAllele'), tipo salvaje y mutaciones ( 'NucleotideChange-BaseChange'), entidades variantes con información insuficiente ('OtherMutation'), gen ('Gene'), entidades patológicas ('Disease') o ID de transcripción ('Transcript').",
-  "examples": 0,
-  "expected_output": "Muestra los resultados en formato tsv con los encabezados 'label' para anotar la entidad como una de 'DNAMutation', 'SNP', 'DNAAllele', 'NucleotideChange-BaseChange', 'OtherMutation', 'Gene', 'Disease', 'Transcript' y 'span' para la entidad identificada Proporcione cada etiqueta y intervalo en una nueva línea.",
-  "text": "Text: {}"
-}, {
-  "prompt_id": "p_002_ner_en_one_shot_guideline_tsv",
-  "instruction": "Find the entities in the below Spanish language text. The number of entities found should match the number of instances the entity is mentioned in the text.",
-  "guideline": "An entity is a variant on DNA sequence ('DNAMutation'), RS number ('SNP'), COSMIC mutation ('SNP'), Allele on DNA sequence ('DNAAllele'), wild type and mutations ('NucleotideChange-BaseChange'), variant entities with insufficient information ('OtherMutation'), gene ('Gene'), disease entities ('Disease') or Transcript ID ('Transcript').",
-  "examples": 1,
-  "expected_output": "Display results in the tsv format with the headers 'label' to annotate the entity as one of 'DNAMutation', 'SNP', 'SNP', 'DNAAllele', 'NucleotideChange-BaseChange', 'OtherMutation', 'Gene', 'Disease', 'Transcript' and 'span' for the identified entity. Provide each label and span in a new line.",
-  "text": "Text: {}"
-}, {
-  "prompt_id": "p_002_ner_es_one_shot_guideline_tsv",
-  "instruction": "Encuentre las entidades en el siguiente texto en español. La cantidad de entidades encontradas debe coincidir con la cantidad de veces que se menciona la entidad en el texto.",
-  "guideline": "Una entidad es una variante en la secuencia de ADN ('DNAMutation'), número RS ('SNP'), mutación CÓSMICA ('SNP'), alelo en la secuencia de ADN ('DNAAllele'), tipo salvaje y mutaciones ( 'NucleotideChange-BaseChange'), entidades variantes con información insuficiente ('OtherMutation'), gen ('Gene'), entidades patológicas ('Disease') o ID de transcripción ('Transcript').",
-  "examples": 1,
-  "expected_output": "Muestra los resultados en formato tsv con los encabezados 'label' para anotar la entidad como una de 'DNAMutation', 'SNP', 'DNAAllele', 'NucleotideChange-BaseChange', 'OtherMutation', 'Gene', 'Disease', 'Transcript' y 'span' para la entidad identificada Proporcione cada etiqueta y intervalo en una nueva línea.",
-  "text": "Text: {}"
-}, {
-  "prompt_id": "p_003_ner_en_10_few_shot_guideline_tsv",
-  "instruction": "Find the entities in the below Spanish language text. The number of entities found should match the number of instances the entity is mentioned in the text.",
-  "guideline": "An entity is a variant on DNA sequence ('DNAMutation'), RS number ('SNP'), COSMIC mutation ('SNP'), Allele on DNA sequence ('DNAAllele'), wild type and mutations ('NucleotideChange-BaseChange'), variant entities with insufficient information ('OtherMutation'), gene ('Gene'), disease entities ('Disease') or Transcript ID ('Transcript').",
-  "examples": 10,
-  "expected_output": "Display results in the tsv format with the headers 'label' to annotate the entity as one of 'DNAMutation', 'SNP', 'SNP', 'DNAAllele', 'NucleotideChange-BaseChange', 'OtherMutation', 'Gene', 'Disease', 'Transcript' and 'span' for the identified entity. Provide each label and span in a new line.",
-  "text": "Text: {}"
-}, {
-  "prompt_id": "p_003_ner_es_10_few_shot_guideline_tsv",
-  "instruction": "Encuentre las entidades en el siguiente texto en español. La cantidad de entidades encontradas debe coincidir con la cantidad de veces que se menciona la entidad en el texto.",
-  "guideline": "Una entidad es una variante en la secuencia de ADN ('DNAMutation'), número RS ('SNP'), mutación CÓSMICA ('SNP'), alelo en la secuencia de ADN ('DNAAllele'), tipo salvaje y mutaciones ( 'NucleotideChange-BaseChange'), entidades variantes con información insuficiente ('OtherMutation'), gen ('Gene'), entidades patológicas ('Disease') o ID de transcripción ('Transcript').",
-  "examples": 10,
-  "expected_output": "Muestra los resultados en formato tsv con los encabezados 'label' para anotar la entidad como una de 'DNAMutation', 'SNP', 'DNAAllele', 'NucleotideChange-BaseChange', 'OtherMutation', 'Gene', 'Disease', 'Transcript' y 'span' para la entidad identificada Proporcione cada etiqueta y intervalo en una nueva línea.",
-  "text": "Text: {}"
-}, {
-  "prompt_id": "p_004_ner_en_20_few_shot_guideline_tsv",
-  "instruction": "Find the entities in the below Spanish language text. The number of entities found should match the number of instances the entity is mentioned in the text.",
-  "guideline": "An entity is a variant on DNA sequence ('DNAMutation'), RS number ('SNP'), COSMIC mutation ('SNP'), Allele on DNA sequence ('DNAAllele'), wild type and mutations ('NucleotideChange-BaseChange'), variant entities with insufficient information ('OtherMutation'), gene ('Gene'), disease entities ('Disease') or Transcript ID ('Transcript').",
-  "examples": 20,
-  "expected_output": "Display results in the tsv format with the headers 'label' to annotate the entity as one of 'DNAMutation', 'SNP', 'SNP', 'DNAAllele', 'NucleotideChange-BaseChange', 'OtherMutation', 'Gene', 'Disease', 'Transcript' and 'span' for the identified entity. Provide each label and span in a new line.",
-  "text": "Text: {}"
-}, {
-  "prompt_id": "p_004_ner_es_20_few_shot_guideline_tsv",
-  "instruction": "Encuentre las entidades en el siguiente texto en español. La cantidad de entidades encontradas debe coincidir con la cantidad de veces que se menciona la entidad en el texto.",
-  "guideline": "Una entidad es una variante en la secuencia de ADN ('DNAMutation'), número RS ('SNP'), mutación CÓSMICA ('SNP'), alelo en la secuencia de ADN ('DNAAllele'), tipo salvaje y mutaciones ( 'NucleotideChange-BaseChange'), entidades variantes con información insuficiente ('OtherMutation'), gen ('Gene'), entidades patológicas ('Disease') o ID de transcripción ('Transcript').",
-  "examples": 20,
-  "expected_output": "Muestra los resultados en formato tsv con los encabezados 'label' para anotar la entidad como una de 'DNAMutation', 'SNP', 'DNAAllele', 'NucleotideChange-BaseChange', 'OtherMutation', 'Gene', 'Disease', 'Transcript' y 'span' para la entidad identificada Proporcione cada etiqueta y intervalo en una nueva línea.",
-  "text": "Text: {}"
-}]
+[
+  {
+    "prompt_id": "p1_zero_shot_en",
+    "instruction": "Find the entities in the below Spanish language text. The number of entities found should match the number of instances the entity is mentioned in the text.",
+    "guideline": "An entity is a variant on DNA sequence ('DNAMutation'), RS number ('SNP'), COSMIC mutation ('SNP'), Allele on DNA sequence ('DNAAllele'), wild type and mutations ('NucleotideChange-BaseChange'), variant entities with insufficient information ('OtherMutation'), gene ('Gene'), disease entities ('Disease') or Transcript ID ('Transcript').",
+    "examples": 0,
+    "expected_output": "Display results in the tsv format with the headers 'label' to annotate the entity as one of 'DNAMutation', 'SNP', 'DNAAllele', 'NucleotideChange-BaseChange', 'OtherMutation', 'Gene', 'Disease', 'Transcript' and 'span' for the identified entity. Provide each label and span in a new line.",
+    "text": "Text: {}"
+  },
+  {
+    "prompt_id": "p1_zero_shot_es",
+    "instruction": "Encuentre las entidades en el siguiente texto en español. La cantidad de entidades encontradas debe coincidir con la cantidad de veces que se menciona la entidad en el texto.",
+    "guideline": "Una entidad es una variante en la secuencia de ADN ('DNAMutation'), número RS ('SNP'), mutación CÓSMICA ('SNP'), alelo en la secuencia de ADN ('DNAAllele'), tipo salvaje y mutaciones ( 'NucleotideChange-BaseChange'), entidades variantes con información insuficiente ('OtherMutation'), gen ('Gene'), entidades patológicas ('Disease') o ID de transcripción ('Transcript').",
+    "examples": 0,
+    "expected_output": "Muestra los resultados en formato tsv con los encabezados 'label' para anotar la entidad como una de 'DNAMutation', 'SNP', 'DNAAllele', 'NucleotideChange-BaseChange', 'OtherMutation', 'Gene', 'Disease', 'Transcript' y 'span' para la entidad identificada Proporcione cada etiqueta y intervalo en una nueva línea.",
+    "text": "Text: {}"
+  },
+  {
+    "prompt_id": "p2_one_shot_en",
+    "instruction": "Find the entities in the below Spanish language text. The number of entities found should match the number of instances the entity is mentioned in the text.",
+    "guideline": "An entity is a variant on DNA sequence ('DNAMutation'), RS number ('SNP'), COSMIC mutation ('SNP'), Allele on DNA sequence ('DNAAllele'), wild type and mutations ('NucleotideChange-BaseChange'), variant entities with insufficient information ('OtherMutation'), gene ('Gene'), disease entities ('Disease') or Transcript ID ('Transcript').",
+    "examples": 1,
+    "expected_output": "Display results in the tsv format with the headers 'label' to annotate the entity as one of 'DNAMutation', 'SNP', 'DNAAllele', 'NucleotideChange-BaseChange', 'OtherMutation', 'Gene', 'Disease', 'Transcript' and 'span' for the identified entity. Provide each label and span in a new line.",
+    "text": "Text: {}"
+  },
+  {
+    "prompt_id": "p2_one_shot_es",
+    "instruction": "Encuentre las entidades en el siguiente texto en español. La cantidad de entidades encontradas debe coincidir con la cantidad de veces que se menciona la entidad en el texto.",
+    "guideline": "Una entidad es una variante en la secuencia de ADN ('DNAMutation'), número RS ('SNP'), mutación CÓSMICA ('SNP'), alelo en la secuencia de ADN ('DNAAllele'), tipo salvaje y mutaciones ( 'NucleotideChange-BaseChange'), entidades variantes con información insuficiente ('OtherMutation'), gen ('Gene'), entidades patológicas ('Disease') o ID de transcripción ('Transcript').",
+    "examples": 1,
+    "expected_output": "Muestra los resultados en formato tsv con los encabezados 'label' para anotar la entidad como una de 'DNAMutation', 'SNP', 'DNAAllele', 'NucleotideChange-BaseChange', 'OtherMutation', 'Gene', 'Disease', 'Transcript' y 'span' para la entidad identificada Proporcione cada etiqueta y intervalo en una nueva línea.",
+    "text": "Text: {}"
+  },
+  {
+    "prompt_id": "p3_five_shot_en",
+    "instruction": "Find the entities in the below Spanish language text. The number of entities found should match the number of instances the entity is mentioned in the text.",
+    "guideline": "An entity is a variant on DNA sequence ('DNAMutation'), RS number ('SNP'), COSMIC mutation ('SNP'), Allele on DNA sequence ('DNAAllele'), wild type and mutations ('NucleotideChange-BaseChange'), variant entities with insufficient information ('OtherMutation'), gene ('Gene'), disease entities ('Disease') or Transcript ID ('Transcript').",
+    "examples": 5,
+    "expected_output": "Display results in the tsv format with the headers 'label' to annotate the entity as one of 'DNAMutation', 'SNP', 'DNAAllele', 'NucleotideChange-BaseChange', 'OtherMutation', 'Gene', 'Disease', 'Transcript' and 'span' for the identified entity. Provide each label and span in a new line.",
+    "text": "Text: {}"
+  },
+  {
+    "prompt_id": "p3_five_shot_es",
+    "instruction": "Encuentre las entidades en el siguiente texto en español. La cantidad de entidades encontradas debe coincidir con la cantidad de veces que se menciona la entidad en el texto.",
+    "guideline": "Una entidad es una variante en la secuencia de ADN ('DNAMutation'), número RS ('SNP'), mutación CÓSMICA ('SNP'), alelo en la secuencia de ADN ('DNAAllele'), tipo salvaje y mutaciones ( 'NucleotideChange-BaseChange'), entidades variantes con información insuficiente ('OtherMutation'), gen ('Gene'), entidades patológicas ('Disease') o ID de transcripción ('Transcript').",
+    "examples": 5,
+    "expected_output": "Muestra los resultados en formato tsv con los encabezados 'label' para anotar la entidad como una de 'DNAMutation', 'SNP', 'DNAAllele', 'NucleotideChange-BaseChange', 'OtherMutation', 'Gene', 'Disease', 'Transcript' y 'span' para la entidad identificada Proporcione cada etiqueta y intervalo en una nueva línea.",
+    "text": "Text: {}"
+  },
+  {
+    "prompt_id": "p4_ten_shot_en",
+    "instruction": "Find the entities in the below Spanish language text. The number of entities found should match the number of instances the entity is mentioned in the text.",
+    "guideline": "An entity is a variant on DNA sequence ('DNAMutation'), RS number ('SNP'), COSMIC mutation ('SNP'), Allele on DNA sequence ('DNAAllele'), wild type and mutations ('NucleotideChange-BaseChange'), variant entities with insufficient information ('OtherMutation'), gene ('Gene'), disease entities ('Disease') or Transcript ID ('Transcript').",
+    "examples": 10,
+    "expected_output": "Display results in the tsv format with the headers 'label' to annotate the entity as one of 'DNAMutation', 'SNP', 'DNAAllele', 'NucleotideChange-BaseChange', 'OtherMutation', 'Gene', 'Disease', 'Transcript' and 'span' for the identified entity. Provide each label and span in a new line.",
+    "text": "Text: {}"
+  },
+  {
+    "prompt_id": "p4_ten_shot_es",
+    "instruction": "Encuentre las entidades en el siguiente texto en español. La cantidad de entidades encontradas debe coincidir con la cantidad de veces que se menciona la entidad en el texto.",
+    "guideline": "Una entidad es una variante en la secuencia de ADN ('DNAMutation'), número RS ('SNP'), mutación CÓSMICA ('SNP'), alelo en la secuencia de ADN ('DNAAllele'), tipo salvaje y mutaciones ( 'NucleotideChange-BaseChange'), entidades variantes con información insuficiente ('OtherMutation'), gen ('Gene'), entidades patológicas ('Disease') o ID de transcripción ('Transcript').",
+    "examples": 10,
+    "expected_output": "Muestra los resultados en formato tsv con los encabezados 'label' para anotar la entidad como una de 'DNAMutation', 'SNP', 'DNAAllele', 'NucleotideChange-BaseChange', 'OtherMutation', 'Gene', 'Disease', 'Transcript' y 'span' para la entidad identificada Proporcione cada etiqueta y intervalo en una nueva línea.",
+    "text": "Text: {}"
+  }
+]
