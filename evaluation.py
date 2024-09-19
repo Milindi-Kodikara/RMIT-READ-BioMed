@@ -179,12 +179,12 @@ def save_brat_output(brat, task, df_to_save=None, filename="./results/temp.tsv")
         df_to_save.to_csv(f"{filename}.tsv", sep='\t', index=False, header=True)
 
 
-def save_hallucinations(prompts, hallucinations):
+def save_hallucinations(task, prompts, hallucinations):
     for _, prompt in prompts.iterrows():
         prompt_id = prompt['prompt_id']
         hallucinated_results_subset = hallucinations[(hallucinations['prompt_id'] == prompt_id)]
 
-        filename = f'results/hallucinations/{prompt_id}_hallucinations.tsv'
+        filename = f'results/hallucinations/{task}/{prompt_id}_hallucinations.tsv'
         hallucinated_results_subset.to_csv(filename, sep='\t', index=False)
 
 
@@ -194,9 +194,14 @@ def evaluate(task, eval_log_filepath, generate_brat_eval_annotations, prompts, c
              root_folder_filepath, note):
     create_directory('./results')
     create_directory('./results/entities')
+    create_directory('./results/entities/NER')
+    create_directory('./results/entities/RE')
+    create_directory('./results/entities/NERRE')
     create_directory('./results/dataset_details')
-    create_directory('./results/ordered_by_prompts')
     create_directory('./results/hallucinations')
+    create_directory('./results/hallucinations/NER')
+    create_directory('./results/hallucinations/RE')
+    create_directory('./results/hallucinations/NERRE')
     create_directory('./results/temp')
     create_directory('./results/brateval')
     create_directory('./results/temp/gold')
@@ -223,10 +228,10 @@ def evaluate(task, eval_log_filepath, generate_brat_eval_annotations, prompts, c
             save_brat_output(True, task, results_subset, results_brat_filename)
 
     # Save whole result output
-    results_filename = f'./results/entities/{task}_results'
+    results_filename = f'./results/entities/{task}/results'
     save_brat_output(False, task, cleaned_entities, results_filename)
 
-    gold_filename = f'./results/entities/{task}_gold'
+    gold_filename = f'./results/entities/{task}/gold'
     save_brat_output(False, task, gold_standard_data, gold_filename)
 
     is_ner = 'true' if task == 'NER' else 'false'
@@ -299,6 +304,6 @@ def evaluate(task, eval_log_filepath, generate_brat_eval_annotations, prompts, c
                  ])], ignore_index=True)
 
     update_evaluation_log(eval_log_filepath, evaluation_values)
-    save_hallucinations(prompts, hallucinations)
+    save_hallucinations(task, prompts, hallucinations)
 
     return evaluation_values
