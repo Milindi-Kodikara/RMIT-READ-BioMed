@@ -69,6 +69,11 @@ def cleaner_variome(text_filepath: str, annotation_filepath: str = '') -> Cleane
                     label_offsets = data_line_items[1]
                     label_offsets = label_offsets.split()
                     label = label_offsets[0]
+
+                    # rename 'Concepts_Ideas', 'Disorder', 'Phenomena', 'Physiology' into 'characteristic'
+                    if label == 'Concepts_Ideas' or label == 'Disorder' or label == 'Phenomena' or label == 'Physiology':
+                        label = 'characteristic'
+
                     offset1 = int(label_offsets[1])
                     offset2 = int(label_offsets[2])
                     span = data_line_items[2]
