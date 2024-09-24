@@ -208,6 +208,7 @@ def evaluate(task, eval_log_filepath, generate_brat_eval_annotations, prompts, c
     create_directory('./results/brateval/gold')
     create_directory('./results/temp/eval')
     create_directory('./results/brateval/eval')
+    create_directory('./results/figures')
 
     if generate_brat_eval_annotations:
         if task == 'NER':
@@ -253,7 +254,7 @@ def evaluate(task, eval_log_filepath, generate_brat_eval_annotations, prompts, c
     combined_total_extractions_and_hallucinations = (total_tuple_or_triplet_extractions +
                                                      total_tuple_or_triplet_hallucinations)
     date = datetime.today().strftime('%Y-%m-%d %H:%M:%S')
-
+    # TODO: Automate exact and overlap matching
     for result in evaluation_script_output_decoded:
         stripped_result = result.strip()
         matches = re.search(eval_pattern_ner, stripped_result) if task == 'NER' else re.search(eval_pattern_re,
