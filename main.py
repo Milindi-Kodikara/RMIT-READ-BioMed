@@ -58,6 +58,8 @@ if __name__ == "__main__":
     # Clean datasets
     train_text, train_gold_standard_data = data_cleaner(train_text_filepath, train_annotation_filepath)
     text, gold_standard_data = data_cleaner(text_filepath, annotation_filepath)
+    # TODO: Save cleaned datasets
+    # TODO: Add func to let users plug their own datasets and models
     # Data + Prompts
     embedded_prompts = embed_prompts(text, train_text, train_gold_standard_data, prompts, task, cross_lang)
 
