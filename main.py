@@ -66,7 +66,9 @@ if __name__ == "__main__":
 
     print('--------------POST-PROCESSING--------------\n\n')
     cleaned_entities, hallucinations = result_cleaner(text, results, ner_annotations, re_annotations, task)
-
+    # TODO: Add other models
+    # TODO: Automate running all datasets
+    # TODO: Add overlap matching
     print('--------------EVALUATION--------------\n\n')
     evaluation_values = evaluate(task, eval_log_filepath, generate_brat_eval_annotations, prompts, cleaned_entities,
                                  hallucinations, gold_standard_data, brat_eval_filepath, root_folder_filepath, note)
