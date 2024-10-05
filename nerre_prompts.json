@@ -8,7 +8,7 @@
     "text": "Text: '{}'"
   },
   {
-    "prompt_id": "p1_one_shot",
+    "prompt_id": "p2_one_shot",
     "instruction": "Find the characteristic, age, body-part, cohort-patient, disease, ethnicity, gender, gene, mutation, size entities and the relations between the entities from the below english language biomedical text.",
     "guideline": "An entity is one of 'characteristic', 'age', 'body-part', 'cohort-patient', 'disease', 'ethnicity', 'gender', 'gene', 'mutation', 'size'. The relation is either “has” or “relatedTo”.",
     "examples": 1,

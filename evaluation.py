@@ -13,7 +13,8 @@ eval_pattern_re = r'(?P<prompt_id>[\w\_]+)\.annall(?P<values>((?:\|\w+:)(\d+\.?\
 relation_pattern = r'(?:\|\w+:)(\d+\.?\d*)'
 
 
-def update_evaluation_log(eval_log_filepath, new_eval_df):
+def update_evaluation_log(result_folder_path, new_eval_df):
+    eval_log_filepath = f'{result_folder_path}/results/eval_log.tsv'
     if os.path.isfile(eval_log_filepath):
         eval_log_df = pd.read_csv(eval_log_filepath, sep='\t', header=0)
     else:
@@ -31,7 +32,7 @@ def update_evaluation_log(eval_log_filepath, new_eval_df):
     eval_log_df.to_csv(eval_log_filepath, sep='\t', index=False, header=True)
 
 
-def compute_dataset_details(dataset_id, task, train_text, train_gold_standard_data, test_text, test_gold_standard_data):
+def compute_dataset_details(result_folder_path, dataset_id, task, train_text, train_gold_standard_data, test_text, test_gold_standard_data):
     train_gold_entity_count = 0
     train_gold_relation_count = 0
     test_gold_entity_count = 0
@@ -108,12 +109,12 @@ def compute_dataset_details(dataset_id, task, train_text, train_gold_standard_da
                                                ':'.join(str(num) for num in annotation_counts_test),
                                                ':'.join(str(num) for num in relation_counts_train),
                                                ':'.join(str(num) for num in relation_counts_test)]
-    save_dataset_details(dataset_details_df, gold_annotations_type_count_df)
+    save_dataset_details(result_folder_path, dataset_details_df, gold_annotations_type_count_df)
 
 
-def save_dataset_details(new_dataset_details_df, new_gold_annotations_type_count_df):
-    dataset_details_filename = './results/dataset_details/dataset_details.tsv'
-    gold_annotation_type_count_filename = f'./results/dataset_details/gold_annotation_type_count.tsv'
+def save_dataset_details(result_folder_path, new_dataset_details_df, new_gold_annotations_type_count_df):
+    dataset_details_filename = f'{result_folder_path}/results/dataset_details/dataset_details.tsv'
+    gold_annotation_type_count_filename = f'{result_folder_path}/results/dataset_details/gold_annotation_type_count.tsv'
 
     if os.path.isfile(dataset_details_filename) and os.path.isfile(gold_annotation_type_count_filename):
         dataset_details_df = pd.read_csv(dataset_details_filename, sep='\t', header=0)
@@ -179,36 +180,35 @@ def save_brat_output(brat, task, df_to_save=None, filename="./results/temp.tsv")
         df_to_save.to_csv(f"{filename}.tsv", sep='\t', index=False, header=True)
 
 
-def save_hallucinations(task, prompts, hallucinations):
+def save_hallucinations(task, result_folder_path, prompts, hallucinations):
     for _, prompt in prompts.iterrows():
         prompt_id = prompt['prompt_id']
         hallucinated_results_subset = hallucinations[(hallucinations['prompt_id'] == prompt_id)]
 
-        filename = f'results/hallucinations/{task}/{prompt_id}_hallucinations.tsv'
+        filename = f'{result_folder_path}/results/hallucinations/{task}/{prompt_id}_hallucinations.tsv'
         hallucinated_results_subset.to_csv(filename, sep='\t', index=False)
 
 
-def evaluate(task, eval_log_filepath, generate_brat_eval_annotations, prompts, cleaned_entities, hallucinations,
+def evaluate(task, result_folder_path, generate_brat_eval_annotations, prompts, cleaned_entities, hallucinations,
              gold_standard_data,
-             brat_eval_filepath,
-             root_folder_filepath, note):
-    create_directory('./results')
-    create_directory('./results/entities')
-    create_directory('./results/entities/NER')
-    create_directory('./results/entities/RE')
-    create_directory('./results/entities/NERRE')
-    create_directory('./results/dataset_details')
-    create_directory('./results/hallucinations')
-    create_directory('./results/hallucinations/NER')
-    create_directory('./results/hallucinations/RE')
-    create_directory('./results/hallucinations/NERRE')
-    create_directory('./results/temp')
-    create_directory('./results/brateval')
-    create_directory('./results/temp/gold')
-    create_directory('./results/brateval/gold')
-    create_directory('./results/temp/eval')
-    create_directory('./results/brateval/eval')
-    create_directory('./results/figures')
+             brat_eval_filepath, note):
+    create_directory(f'{result_folder_path}/results')
+    create_directory(f'{result_folder_path}/results/entities')
+    create_directory(f'{result_folder_path}/results/entities/NER')
+    create_directory(f'{result_folder_path}/results/entities/RE')
+    create_directory(f'{result_folder_path}/results/entities/NERRE')
+    create_directory(f'{result_folder_path}/results/dataset_details')
+    create_directory(f'{result_folder_path}/results/hallucinations')
+    create_directory(f'{result_folder_path}/results/hallucinations/NER')
+    create_directory(f'{result_folder_path}/results/hallucinations/RE')
+    create_directory(f'{result_folder_path}/results/hallucinations/NERRE')
+    create_directory(f'{result_folder_path}/results/temp')
+    create_directory(f'{result_folder_path}/results/brateval')
+    create_directory(f'{result_folder_path}/results/temp/gold')
+    create_directory(f'{result_folder_path}/results/brateval/gold')
+    create_directory(f'{result_folder_path}/results/temp/eval')
+    create_directory(f'{result_folder_path}/results/brateval/eval')
+    create_directory(f'{result_folder_path}/results/figures')
 
     if generate_brat_eval_annotations:
         if task == 'NER':
@@ -216,7 +216,7 @@ def evaluate(task, eval_log_filepath, generate_brat_eval_annotations, prompts, c
 
         for _, prompt in prompts.iterrows():
             prompt_id = prompt['prompt_id']
-            gold_annotations_filename = f'results/temp/gold/{prompt_id}.ann'
+            gold_annotations_filename = f'{result_folder_path}/results/temp/gold/{prompt_id}.ann'
             save_brat_output(True, task, gold_standard_data, gold_annotations_filename)
 
     for _, prompt in prompts.iterrows():
@@ -225,19 +225,19 @@ def evaluate(task, eval_log_filepath, generate_brat_eval_annotations, prompts, c
 
         # Save results in BRAT format
         if generate_brat_eval_annotations:
-            results_brat_filename = f'results/temp/eval/{prompt_id}.ann'
+            results_brat_filename = f'{result_folder_path}/results/temp/eval/{prompt_id}.ann'
             save_brat_output(True, task, results_subset, results_brat_filename)
 
     # Save whole result output
-    results_filename = f'./results/entities/{task}/results'
+    results_filename = f'{result_folder_path}/results/entities/{task}/results'
     save_brat_output(False, task, cleaned_entities, results_filename)
 
-    gold_filename = f'./results/entities/{task}/gold'
+    gold_filename = f'{result_folder_path}/results/entities/{task}/gold'
     save_brat_output(False, task, gold_standard_data, gold_filename)
 
     is_ner = 'true' if task == 'NER' else 'false'
     evaluation_script_output = subprocess.check_output(
-        ['sh', './evaluation.sh', brat_eval_filepath, root_folder_filepath, is_ner])
+        ['sh', './evaluation.sh', brat_eval_filepath, result_folder_path, is_ner])
     evaluation_script_output_decoded = evaluation_script_output.decode("utf-8").split("::")
 
     evaluation_values = pd.DataFrame(
@@ -254,7 +254,7 @@ def evaluate(task, eval_log_filepath, generate_brat_eval_annotations, prompts, c
     combined_total_extractions_and_hallucinations = (total_tuple_or_triplet_extractions +
                                                      total_tuple_or_triplet_hallucinations)
     date = datetime.today().strftime('%Y-%m-%d %H:%M:%S')
-    # TODO: Automate exact and overlap matching
+
     for result in evaluation_script_output_decoded:
         stripped_result = result.strip()
         matches = re.search(eval_pattern_ner, stripped_result) if task == 'NER' else re.search(eval_pattern_re,
@@ -304,7 +304,7 @@ def evaluate(task, eval_log_filepath, generate_brat_eval_annotations, prompts, c
                   },
                  ])], ignore_index=True)
 
-    update_evaluation_log(eval_log_filepath, evaluation_values)
-    save_hallucinations(task, prompts, hallucinations)
+    update_evaluation_log(result_folder_path, evaluation_values)
+    save_hallucinations(task, result_folder_path, prompts, hallucinations)
 
     return evaluation_values

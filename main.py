@@ -33,6 +33,7 @@ prompt_filepath = os.environ["PROMPT-FILEPATH"]
 
 # Dataset
 dataset_id = os.environ["DATASET-ID"]
+clean_data = os.environ["CLEAN-DATA"]
 
 text_filepath = os.environ["TEXT-FILEPATH"]
 annotation_filepath = os.environ["ANNOTATION-FILEPATH"]
@@ -44,22 +45,38 @@ train_annotation_filepath = os.environ["TRAIN-ANNOTATION-FILEPATH"]
 generate_brat_eval_annotations = os.environ["GENERATE-BRAT-EVAL-ANNOTATIONS"]
 brat_eval_filepath = os.environ["BRAT-EVAL-FILEPATH"]
 root_folder_filepath = os.environ["ROOT-FOLDER-FILEPATH"]
-eval_log_filepath = os.environ["EVAL-FILEPATH"]
+result_folder_path = os.environ["RESULT-FOLDER-PATH"]
 note = os.environ["NOTE"]
+
+
+def load_data_files(text_filepath, annotation_filepath):
+    text_df = pd.read_csv(text_filepath, sep='\t', header=0)
+    annotated_data_df = pd.read_csv(annotation_filepath, sep='\t', header=0)
+
+    return text_df, annotated_data_df
+
 
 if __name__ == "__main__":
     # Initialisation
     print('--------------INITIALISING--------------\n\n')
-    data_cleaner = get_cleaner(dataset_id)
+    text, gold_standard_data, train_text, train_gold_standard_data = (pd.DataFrame(), pd.DataFrame(), pd.DataFrame(),
+                                                                      pd.DataFrame())
+
+    if clean_data:
+        print('--------------PRE-PROCESSING DATASETS--------------\n\n')
+        data_cleaner = get_cleaner(dataset_id)
+        # Clean datasets
+        train_text, train_gold_standard_data = data_cleaner(train_text_filepath, train_annotation_filepath)
+        text, gold_standard_data = data_cleaner(text_filepath, annotation_filepath)
+
+    if not clean_data:
+        train_text, train_gold_standard_data = load_data_files(task, train_text_filepath, train_annotation_filepath)
+        text, gold_standard_data = load_data_files(task, text_filepath, annotation_filepath)
+
     prompts = load_prompts(prompt_filepath)
     model = get_model(model_id)
 
-    print('--------------PRE-PROCESSING DATASETS--------------\n\n')
-    # Clean datasets
-    train_text, train_gold_standard_data = data_cleaner(train_text_filepath, train_annotation_filepath)
-    text, gold_standard_data = data_cleaner(text_filepath, annotation_filepath)
-    # TODO: Save cleaned datasets
-    # TODO: Add func to let users plug their own datasets and models
+    print('--------------EMBED PROMPTS--------------\n\n')
     # Data + Prompts
     embedded_prompts = embed_prompts(text, train_text, train_gold_standard_data, prompts, task, cross_lang)
 
@@ -68,13 +85,12 @@ if __name__ == "__main__":
 
     print('--------------POST-PROCESSING--------------\n\n')
     cleaned_entities, hallucinations = result_cleaner(text, results, ner_annotations, re_annotations, task)
-    # TODO: Add other models
-    # TODO: Automate running all datasets
-    # TODO: Add overlap matching
+
     print('--------------EVALUATION--------------\n\n')
-    evaluation_values = evaluate(task, eval_log_filepath, generate_brat_eval_annotations, prompts, cleaned_entities,
-                                 hallucinations, gold_standard_data, brat_eval_filepath, root_folder_filepath, note)
-    compute_dataset_details(dataset_id, task, train_text, train_gold_standard_data, text, gold_standard_data)
+    evaluation_values = evaluate(task, result_folder_path, generate_brat_eval_annotations, prompts, cleaned_entities,
+                                 hallucinations, gold_standard_data, brat_eval_filepath, note)
+    compute_dataset_details(result_folder_path, dataset_id, task, train_text, train_gold_standard_data, text,
+                            gold_standard_data)
 
     print('--------------ANALYSIS--------------\n\n')
-    analysis()
+    analysis(root_folder_filepath, result_folder_path)
