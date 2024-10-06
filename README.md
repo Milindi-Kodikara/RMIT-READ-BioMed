@@ -9,6 +9,10 @@ and find limitations of using generative technologies.
 [Effectiveness of Cross-linguistic Extraction of Genetic
 Information using Generative Large Language Models](https://ceur-ws.org/Vol-3756/GenoVarDis2024_paper4.pdf)
 
+Lesser the shots, higher the hallucinations: 
+Exploration of Genetic Information Extraction using Generative Large Language Models - TBA
+
+
 ## Project overview
 Organisation of information about genes, genetic variants, and associated diseases from vast
 quantities of scientific literature texts through
@@ -88,6 +92,8 @@ will be generated in `<RESULT-FOLDER-PATH>/results` once the program has finishe
 
 ## Releases
 [GenoVarDis 2024](https://github.com/Milindi-Kodikara/RMIT-READ-BioMed-Version-2.0/releases/tag/v1.0)
+
+[ALTA 2024](https://github.com/Milindi-Kodikara/RMIT-READ-BioMed-Version-2.0/releases/tag/v2.0)
 
 ## Contributors
 Milindi Kodikara
