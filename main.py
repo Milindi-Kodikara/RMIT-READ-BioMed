@@ -73,6 +73,7 @@ if __name__ == "__main__":
         train_text, train_gold_standard_data = load_data_files(task, train_text_filepath, train_annotation_filepath)
         text, gold_standard_data = load_data_files(task, text_filepath, annotation_filepath)
 
+    text = text.head(2)
     prompts = load_prompts(prompt_filepath)
     model = get_model(model_id)
 
@@ -94,3 +95,6 @@ if __name__ == "__main__":
 
     print('--------------ANALYSIS--------------\n\n')
     analysis(root_folder_filepath, result_folder_path)
+
+    print('--------------DONE!--------------\n')
+    print(f'Result evaluation can be found in {result_folder_path}/results.')
