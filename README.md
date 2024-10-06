@@ -9,8 +9,6 @@ and find limitations of using generative technologies.
 [Effectiveness of Cross-linguistic Extraction of Genetic
 Information using Generative Large Language Models](https://ceur-ws.org/Vol-3756/GenoVarDis2024_paper4.pdf)
 
-[Lesser the shots, higher the hallucinations: Exploration of Genetic Information Extraction using Generative Large Language Models - TBA]()
-
 ## Project overview
 Organisation of information about genes, genetic variants, and associated diseases from vast
 quantities of scientific literature texts through
@@ -30,7 +28,7 @@ examine the effect of learning paradigms on
 the extent to which genetic entities are fabricated, and the limitations of exact matching to
 determine performance of the model.
 
-## Set up
+### Set up
 1. Download the datasets for IE tasks 
 2. Create train, and test datasets following the below format for each of the datasets.
 
@@ -78,17 +76,18 @@ determine performance of the model.
    
 ##### Note: The number of examples being added should not exceed the number of training texts available. 
     
-## Run 
+### Run 
 Run the Python program via IDE `python main.py`.
 
-## Evaluation
+### Evaluation
 [Brat-Eval](https://github.com/READ-BioMed/brateval) is the tool we have used for evaluation. 
 
 A summary of the datasets, 
 extracted instances, hallucinated instances, visualisation of results, and performance details 
 will be generated in `<RESULT-FOLDER-PATH>/results` once the program has finished running.
 
-
+## Releases
+[GenoVarDis 2024](https://github.com/Milindi-Kodikara/RMIT-READ-BioMed-Version-2.0/releases/tag/v1.0)
 
 ## Contributors
 Milindi Kodikara
