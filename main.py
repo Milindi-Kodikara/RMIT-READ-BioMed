@@ -70,8 +70,8 @@ if __name__ == "__main__":
         text, gold_standard_data = data_cleaner(text_filepath, annotation_filepath)
 
     if not clean_data:
-        train_text, train_gold_standard_data = load_data_files(task, train_text_filepath, train_annotation_filepath)
-        text, gold_standard_data = load_data_files(task, text_filepath, annotation_filepath)
+        train_text, train_gold_standard_data = load_data_files(train_text_filepath, train_annotation_filepath)
+        text, gold_standard_data = load_data_files(text_filepath, annotation_filepath)
 
     text = text.head(2)
     prompts = load_prompts(prompt_filepath)
