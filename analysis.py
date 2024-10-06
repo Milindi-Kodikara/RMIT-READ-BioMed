@@ -3,7 +3,7 @@ from nbconvert.preprocessors import ExecutePreprocessor
 
 
 def analysis(root_folder_path, result_folder_path):
-    nb_template_path = f'{root_folder_path}/RMIT-READ-BioMed-Version-2.0/analysis_template.ipynb'
+    nb_template_path = f'{root_folder_path}/RMIT-READ-BioMed/analysis_template.ipynb'
     with open(nb_template_path) as ff:
         nb_in = nbf.read(ff, nbf.NO_CONVERT)
 
