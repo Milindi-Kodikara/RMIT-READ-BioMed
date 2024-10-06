@@ -82,9 +82,11 @@ determine performance of the model.
 Run the Python program via IDE `python main.py`.
 
 ## Evaluation
-[Brat-Eval](https://github.com/READ-BioMed/brateval) is the tool we have used for evaluation. A summary of the datasets, 
-extracted instances, hallucinated instances, visualisation of analysis, and evaluation analysis 
-is generated in `<RESULT-FOLDER-PATH>/results`.
+[Brat-Eval](https://github.com/READ-BioMed/brateval) is the tool we have used for evaluation. 
+
+A summary of the datasets, 
+extracted instances, hallucinated instances, visualisation of results, and performance details 
+will be generated in `<RESULT-FOLDER-PATH>/results` once the program has finished running.
 
 
 
