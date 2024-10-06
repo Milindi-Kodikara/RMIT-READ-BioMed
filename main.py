@@ -73,7 +73,6 @@ if __name__ == "__main__":
         train_text, train_gold_standard_data = load_data_files(train_text_filepath, train_annotation_filepath)
         text, gold_standard_data = load_data_files(text_filepath, annotation_filepath)
 
-    text = text.head(2)
     prompts = load_prompts(prompt_filepath)
     model = get_model(model_id)
 

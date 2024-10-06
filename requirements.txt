@@ -1,0 +1,6 @@
+pandas
+python-dotenv
+openai
+nbformat
+nbconvert
+numpy
