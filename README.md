@@ -4,7 +4,7 @@ In this project, we experiment with a range of prompting strategies for
 genetic information extraction to evaluate the performance, 
 and find limitations of using generative technologies.
 
-## List of Publications and corresponding release version
+## List of Publications
 
 [Effectiveness of Cross-linguistic Extraction of Genetic
 Information using Generative Large Language Models](https://ceur-ws.org/Vol-3756/GenoVarDis2024_paper4.pdf)
