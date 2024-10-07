@@ -70,13 +70,27 @@ determine performance of the model.
 2. [Install Jupyter notebook](https://jupyter.org/install) 
 
 
-3. [Setting up Azure OpenAI model](https://learn.microsoft.com/en-us/azure/ai-services/openai/how-to/working-with-models?tabs=powershell#model-updates)
+3. Set up models
+   - Currently supported models are:
+     - GPT-3.5 Turbo, model id: `gpt-35-turbo-16k`
+     - Llama 3 70b Instruct, model id: `meta.llama3-70b-instruct-v1:0`
+   - Using Azure OpenAI
+     - [Setting up Azure OpenAI model](https://learn.microsoft.com/en-us/azure/ai-services/openai/how-to/working-with-models?tabs=powershell#model-updates)
+     - [Setting up connection to GPT-3.5 Turbo using Azure OpenAI service](https://learn.microsoft.com/en-us/azure/ai-services/openai/quickstart?tabs=command-line%2Cpython-new&pivots=programming-language-python)
+       
+     Note: The environment variables should be set inside the `.env` file. 
+     
+   - Using [Amazon Bedrock](https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-bedrock.html)
+     - [Getting started with Amazon Bedrock](https://docs.aws.amazon.com/bedrock/latest/userguide/getting-started.html)
+     - [Install AWS CLI](https://aws.amazon.com/cli/)
+     - [Configure SSO for authentication](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-sso.html)
+       - `aws configure sso`
+       - `aws sso login --profile <PROFILE-NAME>`
 
-
-4. [Setting up connection to GPT-3.5 Turbo using Azure OpenAI service](https://learn.microsoft.com/en-us/azure/ai-services/openai/quickstart?tabs=command-line%2Cpython-new&pivots=programming-language-python)
-   - In the Environment variables section, instead of doing what is outlined in the link, create a `.env` file in the root folder following the given template in `.env-template`.
+4. Duplicate the `.env-template` file as `.env` and populate according to the _task_ and _model_.
 
 5. \[Optional] Add custom prompts to the matching prompt library file: `<task>_prompts.json`.
+6. \[Optional] To add other models, update `models.py` file by creating the corresponding model class similar to class `GPTModel`.
    
 ##### Note: The number of examples being added should not exceed the number of training texts available. 
     

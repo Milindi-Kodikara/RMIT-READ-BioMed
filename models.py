@@ -5,6 +5,14 @@ from typing import LiteralString, Any, List, Dict
 
 from openai import AzureOpenAI
 
+import boto3
+from botocore.exceptions import ClientError
+
+import json
+from dotenv import load_dotenv
+
+load_dotenv()
+
 
 class Model(abc.ABC):
     @abc.abstractmethod
@@ -53,8 +61,56 @@ class GPTModel(Model):
         return generated_text_result
 
 
+class LlamaModel(Model):
+    def __init__(self):
+        profile_name = os.environ["PROFILE-NAME"]
+        boto3.setup_default_session(profile_name=profile_name)
+        self.client = boto3.client("bedrock-runtime", region_name="us-east-1")
+
+        # Set the model ID
+        self.model_id = os.environ["MODEL-ID"]
+
+    def __call__(self, *args, **kwargs):
+        pass
+
+    def generate_result(self, prompt: str) -> str:
+        # Embed the prompt in Llama 3's instruction format.
+        formatted_prompt = f"""
+        <|begin_of_text|><|start_header_id|>user<|end_header_id|>
+        {prompt}
+        <|eot_id|>
+        <|start_header_id|>assistant<|end_header_id|>
+        """
+
+        # Format the request payload using the model's native structure.
+        native_request = {
+            "prompt": formatted_prompt,
+            "max_gen_len": 512,
+            "temperature": 0.5,
+        }
+
+        # Convert the native request to JSON.
+        request = json.dumps(native_request)
+
+        try:
+            # Invoke the model with the request.
+            response = self.client.invoke_model(modelId=self.model_id, body=request)
+
+        except (ClientError, Exception) as e:
+            print(f"ERROR: Can't invoke '{self.model_id}'. Reason: {e}")
+            exit(1)
+
+        # Decode the response body.
+        model_response = json.loads(response["body"].read())
+
+        # Extract and return the response text.
+        generated_text_result = model_response["generation"]
+        return generated_text_result
+
+
 MODELS: dict[str, type[Model]] = {
-    "GPT": GPTModel
+    "gpt-35-turbo-16k": GPTModel,
+    "meta.llama3-70b-instruct-v1:0": LlamaModel,
 }
 
 

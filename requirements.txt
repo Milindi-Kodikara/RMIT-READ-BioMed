@@ -4,3 +4,4 @@ openai
 nbformat
 nbconvert
 numpy
+boto3
