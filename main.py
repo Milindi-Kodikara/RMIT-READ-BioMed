@@ -34,6 +34,10 @@ prompt_filepath = os.environ["PROMPT-FILEPATH"]
 # Dataset
 dataset_id = os.environ["DATASET-ID"]
 clean_data = os.environ["CLEAN-DATA"]
+if clean_data == 'true':
+    clean_data = True
+else:
+    clean_data = False
 
 text_filepath = os.environ["TEXT-FILEPATH"]
 annotation_filepath = os.environ["ANNOTATION-FILEPATH"]
@@ -73,6 +77,7 @@ if __name__ == "__main__":
         train_text, train_gold_standard_data = load_data_files(train_text_filepath, train_annotation_filepath)
         text, gold_standard_data = load_data_files(text_filepath, annotation_filepath)
 
+    text = text.head(2)
     prompts = load_prompts(prompt_filepath)
     model = get_model(model_id)
 
