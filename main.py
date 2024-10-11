@@ -72,7 +72,7 @@ if __name__ == "__main__":
         # Clean datasets
         train_text, train_gold_standard_data = data_cleaner(train_text_filepath, train_annotation_filepath)
         text, gold_standard_data = data_cleaner(text_filepath, annotation_filepath)
-
+        # TODO: Save cleaned datasets
     if not clean_data:
         train_text, train_gold_standard_data = load_data_files(train_text_filepath, train_annotation_filepath)
         text, gold_standard_data = load_data_files(text_filepath, annotation_filepath)
@@ -83,19 +83,22 @@ if __name__ == "__main__":
     print('--------------EMBED PROMPTS--------------\n\n')
     # Data + Prompts
     embedded_prompts = embed_prompts(text, train_text, train_gold_standard_data, prompts, task, cross_lang)
-
+    # TODO: Save embedded prompts
     print('--------------RUN MODEL--------------\n\n')
     results = model.get_results(embedded_prompts)
 
     print('--------------POST-PROCESSING--------------\n\n')
     cleaned_entities, hallucinations = result_cleaner(text, results, ner_annotations, re_annotations, task)
 
+    # TODO: Add overlap matching
     print('--------------EVALUATION--------------\n\n')
-    evaluation_values = evaluate(task, result_folder_path, generate_brat_eval_annotations, prompts, cleaned_entities,
+    evaluation_values = evaluate(task, model_id, result_folder_path, generate_brat_eval_annotations, prompts, cleaned_entities,
                                  hallucinations, gold_standard_data, brat_eval_filepath, note)
     compute_dataset_details(result_folder_path, dataset_id, task, train_text, train_gold_standard_data, text,
                             gold_standard_data)
 
+    # TODO: Update analysis to take in all models
+    # TODO: Refactor this
     print('--------------ANALYSIS--------------\n\n')
     analysis(root_folder_filepath, result_folder_path)
 

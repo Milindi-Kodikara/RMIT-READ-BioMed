@@ -19,7 +19,7 @@ def update_evaluation_log(result_folder_path, new_eval_df):
         eval_log_df = pd.read_csv(eval_log_filepath, sep='\t', header=0)
     else:
         eval_log_df = pd.DataFrame(
-            columns=['prompt_id', 'task', 'true_positive', 'false_positive', 'false_negative',
+            columns=['model_id', 'task', 'prompt_id', 'true_positive', 'false_positive', 'false_negative',
                      'false_positive_relations', 'false_negative_relations', 'precision',
                      'recall', 'f1', 'tuple_or_triplet_hallucinations_per_prompt',
                      'total_tuple_or_triplet_hallucinations',
@@ -189,7 +189,7 @@ def save_hallucinations(task, result_folder_path, prompts, hallucinations):
         hallucinated_results_subset.to_csv(filename, sep='\t', index=False)
 
 
-def evaluate(task, result_folder_path, generate_brat_eval_annotations, prompts, cleaned_entities, hallucinations,
+def evaluate(task, model_id, result_folder_path, generate_brat_eval_annotations, prompts, cleaned_entities, hallucinations,
              gold_standard_data,
              brat_eval_filepath, note):
     create_directory(f'{result_folder_path}/results')
@@ -209,6 +209,9 @@ def evaluate(task, result_folder_path, generate_brat_eval_annotations, prompts, 
     create_directory(f'{result_folder_path}/results/temp/eval')
     create_directory(f'{result_folder_path}/results/brateval/eval')
     create_directory(f'{result_folder_path}/results/figures')
+
+    cleaned_entities['model_id'] = model_id
+    hallucinations['model_id'] = model_id
 
     if generate_brat_eval_annotations:
         if task == 'NER':
@@ -241,7 +244,7 @@ def evaluate(task, result_folder_path, generate_brat_eval_annotations, prompts, 
     evaluation_script_output_decoded = evaluation_script_output.decode("utf-8").split("::")
 
     evaluation_values = pd.DataFrame(
-        columns=['prompt_id', 'task', 'true_positive', 'false_positive', 'false_negative',
+        columns=['model_id', 'task', 'prompt_id', 'true_positive', 'false_positive', 'false_negative',
                  'false_positive_relations', 'false_negative_relations', 'precision',
                  'recall', 'f1', 'tuple_or_triplet_hallucinations_per_prompt', 'total_tuple_or_triplet_hallucinations',
                  'extracted_tuples_or_triplets_per_prompt',
@@ -283,8 +286,9 @@ def evaluate(task, result_folder_path, generate_brat_eval_annotations, prompts, 
             combined_total_extractions_and_hallucinations_per_prompt = extracted_tuples_or_triplets_per_prompt + tuple_or_triplet_hallucinations_per_prompt
 
             evaluation_values = pd.concat([evaluation_values, pd.DataFrame(
-                [{'prompt_id': prompt_id,
+                [{'model_id': model_id,
                   'task': task,
+                  'prompt_id': prompt_id,
                   'true_positive': true_positive,
                   'false_positive': false_positive,
                   'false_negative': false_negative,
