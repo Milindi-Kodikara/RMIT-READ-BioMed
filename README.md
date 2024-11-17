@@ -6,11 +6,12 @@ and find limitations of using generative technologies.
 
 ## List of Publications
 
-[Effectiveness of Cross-linguistic Extraction of Genetic
-Information using Generative Large Language Models](https://ceur-ws.org/Vol-3756/GenoVarDis2024_paper4.pdf)
+[Milindi Kodikara and Karin M. Verspoor. 2024. Effectiveness of Cross-Linguistic Extraction of Genetic Information using
+Generative Large Language Models. In Proceedings of the Iberian Languages Evaluation Forum (IberLEF 2024).](https://ceur-ws.org/Vol-3756/GenoVarDis2024_paper4.pdf)
 
-Lesser the shots, higher the hallucinations: 
-Exploration of Genetic Information Extraction using Generative Large Language Models - TBA
+Milindi Kodikara and Karin M. Verspoor. 2024 (to appear). Lesser the Shots, Higher the Hallucinations: Exploration of Genetic
+Information Extraction using Generative Large Language Models. In Proceedings of the Australian Language Technology
+Association (ALTA 2024).
 
 
 ## Project overview
