@@ -9,9 +9,9 @@ and find limitations of using generative technologies.
 [Milindi Kodikara and Karin M. Verspoor. 2024. Effectiveness of Cross-Linguistic Extraction of Genetic Information using
 Generative Large Language Models. In Proceedings of the Iberian Languages Evaluation Forum (IberLEF 2024).](https://ceur-ws.org/Vol-3756/GenoVarDis2024_paper4.pdf)
 
-Milindi Kodikara and Karin M. Verspoor. 2024 (to appear). Lesser the Shots, Higher the Hallucinations: Exploration of Genetic
+[Milindi Kodikara and Karin M. Verspoor. 2024. Lesser the Shots, Higher the Hallucinations: Exploration of Genetic
 Information Extraction using Generative Large Language Models. In Proceedings of the Australian Language Technology
-Association (ALTA 2024).
+Association (ALTA 2024).](https://alta2024.alta.asn.au/assets/papers/40.pdf)
 
 
 ## Project overview
